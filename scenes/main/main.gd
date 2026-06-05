@@ -37,7 +37,7 @@ func _process(delta: float) -> void:
 				peak = v
 		# Smooth toward target height
 		var target = peak * MAX_HEIGHT
-		bar_heights[b] = lerp(bar_heights[b], target, SMOOTHING)
+		bar_heights[b] = lerp(bar_heights[b], exp(target*.15), SMOOTHING)
 
 	queue_redraw()
 
