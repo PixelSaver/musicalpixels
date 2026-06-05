@@ -1,8 +1,6 @@
 class_name FFTHelper
 extends RefCounted
 
-static var _freq_bin_cache : Dictionary = {}
-
 static func get_band_energy(
 	spectrum: PackedFloat32Array,
 	fft_size: int,

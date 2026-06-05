@@ -14,12 +14,10 @@ func _ready() -> void:
 	bar_heights.resize(NUM_BARS)
 	bar_heights.fill(0.0)
 
-func handle_visualization(miniaudio:MiniaudioClass, samples:PackedFloat32Array, _delta:float) -> void:
+func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array, _delta:float) -> void:
 	var spectrum: PackedFloat32Array = miniaudio.get_fft(FFT_SIZE, true, true, 0)
 	if spectrum.size() == 0:
 		return
-
-	var freq_bins = FFT_SIZE / 2.
 
 	for b in range(NUM_BARS):
 		var t1 = float(b) / NUM_BARS
