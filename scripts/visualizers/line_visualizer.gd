@@ -20,7 +20,7 @@ func handle_visualization(_mini, samples:PackedFloat32Array, _delta:float) -> vo
 
 	# Mmono
 	var mono: PackedFloat32Array = PackedFloat32Array()
-	mono.resize(samples.size() / 2.)
+	mono.resize(int(samples.size() / 2.))
 	for i in range(mono.size()):
 		mono[i] = (samples[i * 2] + samples[i * 2 + 1]) * 0.5
 

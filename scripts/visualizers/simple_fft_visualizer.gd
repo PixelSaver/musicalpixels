@@ -2,9 +2,11 @@ extends VisualizerClass
 class_name SimpleFFTVisualizer
 
 @export var NUM_BARS  := 64
-@export var FFT_SIZE  := 8192
+@export var FFT_SIZE  := 4096
 @export var BAR_WIDTH := 16
 @export var MAX_HEIGHT := 400.0
+
+@export var sample_rate := 48000.0
 
 var bar_heights: Array[float] = []
 
@@ -23,14 +25,18 @@ func handle_visualization(miniaudio:MiniaudioClass, samples:PackedFloat32Array, 
 		var t1 = float(b) / NUM_BARS
 		var t2 = float(b + 1) / NUM_BARS
 
-		var start_bin = max(1, int(pow(t1, 2.0) * freq_bins))
-		var end_bin   = max(start_bin + 1, int(pow(t2, 2.0) * freq_bins))
-		end_bin = min(end_bin, freq_bins - 1)
+		var nyquist := sample_rate * 0.5
+		var f_min := 20.0 * pow(nyquist / 20.0, t1)
+		var f_max := 20.0 * pow(nyquist / 20.0, t2)
+		
 
-		var energy := 0.0
-		for i in range(start_bin, end_bin):
-			energy += spectrum[i]
-		energy /= float(end_bin - start_bin)
+		var energy := FFTHelper.get_band_energy(
+			spectrum,
+			FFT_SIZE,
+			f_min,
+			f_max,
+			sample_rate,
+		)
 
 		var target = clamp(energy * 5.0, 0.0, 1.0) * MAX_HEIGHT
 		target = log(target+1.0)/log(10) * 100
