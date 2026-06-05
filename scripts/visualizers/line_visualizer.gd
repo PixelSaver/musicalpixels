@@ -14,7 +14,7 @@ func _ready() -> void:
 	bar_heights.resize(NUM_BARS)
 	bar_heights.fill(0.0)
 
-func handle_visualization(samples:PackedFloat32Array, _delta:float) -> void:
+func handle_visualization(_mini, samples:PackedFloat32Array, _delta:float) -> void:
 	if samples.size() < NUM_BARS * 2:
 		return
 

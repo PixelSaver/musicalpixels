@@ -12,4 +12,4 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var vis := Global.current_visualizer
 	if vis == null: return
-	vis.handle_visualization(miniaudio.get_samples(), delta)
+	vis.handle_visualization(miniaudio, miniaudio.get_samples(), delta)
