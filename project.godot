@@ -15,9 +15,21 @@ run/main_scene="uid://s15mnoepgkre"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Global="*uid://5dn27c8vcyqf"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://scenes/": "blue",
+"res://scripts/": "green",
+"res://scripts/visualizers/": "yellow"
+}
 
 [physics]
 
