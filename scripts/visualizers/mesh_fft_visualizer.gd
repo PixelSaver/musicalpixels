@@ -11,6 +11,7 @@ class_name MeshFFTVisualizer
 @export var max_height := 400.0
 @export var noise_level := 1.0
 @export var noise : NoiseTexture2D
+@export var h_gradient : GradientTexture1D
 
 @export var sample_rate := 48000.0
 
@@ -35,6 +36,7 @@ func _ready() -> void:
 	mesh_mat.set_shader_parameter("data_size", float(num_bars))
 	mesh_mat.set_shader_parameter("noise_level", noise_level)
 	mesh_mat.set_shader_parameter("noise_tex", noise)
+	mesh_mat.set_shader_parameter("gradient", h_gradient)
 
 func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array, _delta:float) -> void:
 	var spectrum: PackedFloat32Array = miniaudio.get_fft(fft_size, true, true, 0)

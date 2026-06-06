@@ -9,6 +9,13 @@
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_534kx"]
 noise = SubResource("FastNoiseLite_4ijoi")
 
+[sub_resource type="Gradient" id="Gradient_4ijoi"]
+offsets = PackedFloat32Array(0, 0.55842394, 1)
+colors = PackedColorArray(0.85, 0.2805, 0.35643324, 1, 0.96386784, 0.59023625, 0.2674447, 1, 0.8962227, 0.827331, 0.10203504, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_534kx"]
+gradient = SubResource("Gradient_4ijoi")
+
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4ijoi"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -21,17 +28,26 @@ background_mode = 2
 sky = SubResource("Sky_534kx")
 tonemap_mode = 2
 
+[sub_resource type="Gradient" id="Gradient_534kx"]
+offsets = PackedFloat32Array(0, 0.51457727, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.38046646, 0.38046646, 0.38046646, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_x23rf"]
+gradient = SubResource("Gradient_534kx")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4ijoi"]
 render_priority = 0
 shader = ExtResource("2_4ijoi")
+shader_parameter/gradient = SubResource("GradientTexture1D_x23rf")
 shader_parameter/data_size = 0
-shader_parameter/max_radius = 2.0
+shader_parameter/max_radius = 2.3
 shader_parameter/height_scale = 1.0
 shader_parameter/texel = 0.015625
 shader_parameter/max_energy = 0.0
 shader_parameter/noise_level = 0.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4ijoi"]
+size = Vector2(2.5, 2.5)
 subdivide_width = 20
 subdivide_depth = 20
 
@@ -40,6 +56,7 @@ script = ExtResource("1_r5nts")
 low_cut = 40.0
 high_cut = 48000.0
 noise = SubResource("NoiseTexture2D_534kx")
+h_gradient = SubResource("GradientTexture1D_534kx")
 metadata/_custom_type_script = "uid://bpwif440eepyt"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1560241893]
