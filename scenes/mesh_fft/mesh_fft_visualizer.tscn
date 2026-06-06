@@ -4,6 +4,11 @@
 [ext_resource type="Shader" uid="uid://d4lig7kfcn40w" path="res://shaders/mesh_fft.gdshader" id="2_4ijoi"]
 [ext_resource type="Script" uid="uid://cicujugqbv2jr" path="res://scenes/mesh_fft/mesh.gd" id="3_4ijoi"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4ijoi"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_534kx"]
+noise = SubResource("FastNoiseLite_4ijoi")
+
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4ijoi"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -20,19 +25,21 @@ tonemap_mode = 2
 render_priority = 0
 shader = ExtResource("2_4ijoi")
 shader_parameter/data_size = 0
-shader_parameter/max_radius = 1.5
+shader_parameter/max_radius = 2.0
 shader_parameter/height_scale = 1.0
 shader_parameter/texel = 0.015625
+shader_parameter/max_energy = 0.0
+shader_parameter/noise_level = 0.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4ijoi"]
-size = Vector2(3, 3)
 subdivide_width = 20
 subdivide_depth = 20
 
 [node name="MeshFFTVisualizer" type="Node2D" unique_id=1766004536]
 script = ExtResource("1_r5nts")
-low_cut = 35.0
+low_cut = 40.0
 high_cut = 48000.0
+noise = SubResource("NoiseTexture2D_534kx")
 metadata/_custom_type_script = "uid://bpwif440eepyt"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1560241893]

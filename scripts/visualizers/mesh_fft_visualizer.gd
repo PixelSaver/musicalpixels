@@ -9,6 +9,8 @@ class_name MeshFFTVisualizer
 @export var fft_size := 1024
 @export var bar_width := 16
 @export var max_height := 400.0
+@export var noise_level := 1.0
+@export var noise : NoiseTexture2D
 
 @export var sample_rate := 48000.0
 
@@ -31,6 +33,8 @@ func _ready() -> void:
 	var mesh_mat = mesh.material_override as ShaderMaterial
 	mesh_mat.set_shader_parameter("data_tex", fft_tex)
 	mesh_mat.set_shader_parameter("data_size", float(num_bars))
+	mesh_mat.set_shader_parameter("noise_level", noise_level)
+	mesh_mat.set_shader_parameter("noise_tex", noise)
 
 func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array, _delta:float) -> void:
 	var spectrum: PackedFloat32Array = miniaudio.get_fft(fft_size, true, true, 0)
@@ -60,6 +64,7 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 
 		var speed = 0.8 if target > bar_heights[b] else 0.1
 		bar_heights[b] = lerp(bar_heights[b], target, speed)
+	mesh.material_override.set_shader_parameter("max_energy", bar_heights.max())
 
 	_update_fft_tex()
 
