@@ -1,9 +1,9 @@
 extends VisualizerClass
-class_name SimpleFFTVisualizer
+class_name SkewFFTVisualizer
 
 @export var num_bars  := 64
 @export var fft_size := 8192
-@export var bar_width := 16
+@export var bar_width := 20
 @export var max_height := 400.0
 
 @export var sample_rate := 48000.0
@@ -36,9 +36,8 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 			sample_rate,
 		)
 
-		#var target = clamp(energy * 5.0, 0.0, 1.0) * max_height
 		var target = energy * 5.0 * max_height
-		target = log(target+1.0)/log(10) * 50
+		target = log(target+1.0)/log(10) * 100
 
 		var speed = 0.8 if target > bar_heights[b] else 0.1
 		bar_heights[b] = lerp(bar_heights[b], target, speed)
@@ -54,9 +53,26 @@ func _draw() -> void:
 
 	for b in range(num_bars):
 		var h = bar_heights[b]
-		if h <= 2: continue
+		if h <= 1: continue
 		var x = origin_x + b * bar_width
 		var color = Color.from_hsv(remap(float(b) / num_bars, 0.0, 1.0, 0.4, 0.7), 0.8, 0.9)
 		#var color = Color.WHITE
-		draw_rect(Rect2(x, origin_y - h, bar_width - 2, h), color)
-		draw_rect(Rect2(x, origin_y, bar_width - 2, h), color)
+		draw_colored_polygon(
+			PackedVector2Array([
+					Vector2(x, origin_y),          # bottom-left
+					Vector2(x + bar_width, origin_y),     # bottom-right
+					Vector2(x + bar_width, origin_y - h),                # top-right
+					Vector2(x, origin_y - h),                    # top-left
+				]),
+			color
+		)
+		var skew = 1.2 * h*0.5
+		draw_colored_polygon(
+			PackedVector2Array([
+					Vector2(x - skew, (origin_y + h*0.5)),          # bottom-left
+					Vector2(x + bar_width - skew, (origin_y + h*0.5)),     # bottom-right
+					Vector2(x + bar_width, origin_y),                # top-right
+					Vector2(x, origin_y),                    # top-left
+				]),
+			color * Color(1,1,1,0.7)
+		)

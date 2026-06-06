@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://se5ixnc1wwu5"]
+
+[ext_resource type="Script" uid="uid://bpwif440eepyt" path="res://scripts/visualizers/mesh_fft_visualizer.gd" id="1_r5nts"]
+[ext_resource type="Shader" uid="uid://d4lig7kfcn40w" path="res://shaders/mesh_fft.gdshader" id="2_4ijoi"]
+[ext_resource type="Script" uid="uid://cicujugqbv2jr" path="res://scenes/mesh_fft/mesh.gd" id="3_4ijoi"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4ijoi"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_534kx"]
+sky_material = SubResource("ProceduralSkyMaterial_4ijoi")
+
+[sub_resource type="Environment" id="Environment_x23rf"]
+background_mode = 2
+sky = SubResource("Sky_534kx")
+tonemap_mode = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ijoi"]
+render_priority = 0
+shader = ExtResource("2_4ijoi")
+shader_parameter/data_size = 0
+shader_parameter/max_radius = 1.0
+shader_parameter/height_scale = 1.0
+shader_parameter/texel = 0.015625
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_x23rf"]
+subdivide_width = 128
+subdivide_depth = 128
+
+[node name="MeshFFTVisualizer" type="Node2D" unique_id=1766004536]
+script = ExtResource("1_r5nts")
+metadata/_custom_type_script = "uid://bpwif440eepyt"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1560241893]
+environment = SubResource("Environment_x23rf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1783346565]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_color = Color(0.6039216, 0.4392157, 0.2901961, 1)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=286907339]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 1, 2)
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=1244551114]
+material_override = SubResource("ShaderMaterial_4ijoi")
+material_overlay = SubResource("ShaderMaterial_4ijoi")
+mesh = SubResource("PlaneMesh_x23rf")
+script = ExtResource("3_4ijoi")

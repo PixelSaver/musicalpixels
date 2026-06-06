@@ -1,5 +1,7 @@
 extends VisualizerClass
-class_name SimpleFFTVisualizer
+class_name MeshFFTVisualizer
+
+@onready var mesh: MeshFFT = $Mesh
 
 @export var num_bars  := 64
 @export var fft_size := 8192
@@ -8,11 +10,20 @@ class_name SimpleFFTVisualizer
 
 @export var sample_rate := 48000.0
 
+var fft_img : Image
+var fft_tex : ImageTexture
+
 var bar_heights: Array[float] = []
 
 func _ready() -> void:
 	bar_heights.resize(num_bars)
 	bar_heights.fill(0.0)
+	fft_img = Image.create(num_bars, 1, false, Image.FORMAT_RF)
+	fft_tex = ImageTexture.create_from_image(fft_img)
+	
+	var mesh_mat = mesh.material_override as ShaderMaterial
+	mesh_mat.set_shader_parameter("data_tex", fft_tex)
+	mesh_mat.set_shader_parameter("data_size", float(num_bars))
 
 func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array, _delta:float) -> void:
 	var spectrum: PackedFloat32Array = miniaudio.get_fft(fft_size, true, true, 0)
@@ -43,20 +54,11 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 		var speed = 0.8 if target > bar_heights[b] else 0.1
 		bar_heights[b] = lerp(bar_heights[b], target, speed)
 
-	queue_redraw()
+	_update_fft_tex()
 
-func _draw() -> void:
-	if bar_heights.size() == 0: return
-	var viewport_size = get_viewport_rect().size
-	var total_width = num_bars * bar_width
-	var origin_x = (viewport_size.x - total_width) / 2.0
-	var origin_y = viewport_size.y / 2.0
-
-	for b in range(num_bars):
-		var h = bar_heights[b]
-		if h <= 2: continue
-		var x = origin_x + b * bar_width
-		var color = Color.from_hsv(remap(float(b) / num_bars, 0.0, 1.0, 0.4, 0.7), 0.8, 0.9)
-		#var color = Color.WHITE
-		draw_rect(Rect2(x, origin_y - h, bar_width - 2, h), color)
-		draw_rect(Rect2(x, origin_y, bar_width - 2, h), color)
+func _update_fft_tex() -> void:
+	for i in range(num_bars):
+		var v = clamp(bar_heights[i] / max_height, 0.0, 1.0)
+		fft_img.set_pixel(i, 0, Color(v,0,0))
+	#fft_tex = ImageTexture.create_from_image(fft_img)
+	fft_tex.update(fft_img)
