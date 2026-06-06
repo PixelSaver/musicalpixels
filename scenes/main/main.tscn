@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cw00nqrgqp1ev" path="res://scripts/visualizer_manager.gd" id="1_hyk8p"]
 [ext_resource type="Script" uid="uid://efbulppasq6b" path="res://scripts/visualizers/skew_fft_visualizer.gd" id="2_iuonh"]
-[ext_resource type="PackedScene" uid="uid://se5ixnc1wwu5" path="res://scenes/mesh_fft/mesh_fft_visualizer.tscn" id="4_6q06x"]
+[ext_resource type="PackedScene" uid="uid://df03fop3q15aq" path="res://scenes/mesh_fft/sphere_fft_visualizer.tscn" id="4_6q06x"]
 [ext_resource type="Script" uid="uid://dsgygmnqa35se" path="res://scripts/visualizers/simple_fft_visualizer.gd" id="4_l3cfh"]
 
 [sub_resource type="Gradient" id="Gradient_l3cfh"]
@@ -15,7 +15,7 @@ gradient = SubResource("Gradient_l3cfh")
 
 [node name="Manager" type="Node2D" parent="." unique_id=112581342 node_paths=PackedStringArray("visualizer")]
 script = ExtResource("1_hyk8p")
-visualizer = NodePath("MeshFFTVisualizer")
+visualizer = NodePath("SphereFFTVisualizer")
 metadata/_custom_type_script = "uid://cw00nqrgqp1ev"
 
 [node name="SkewFFTVisualizer" type="Node2D" parent="Manager" unique_id=347025619]
@@ -27,4 +27,4 @@ script = ExtResource("4_l3cfh")
 gradient = SubResource("GradientTexture1D_6q06x")
 metadata/_custom_type_script = "uid://dsgygmnqa35se"
 
-[node name="MeshFFTVisualizer" parent="Manager" unique_id=1766004536 instance=ExtResource("4_6q06x")]
+[node name="SphereFFTVisualizer" parent="Manager" unique_id=585539840 instance=ExtResource("4_6q06x")]

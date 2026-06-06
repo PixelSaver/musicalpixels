@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://df03fop3q15aq"]
+
+[ext_resource type="Script" uid="uid://dpvdk46375lxf" path="res://scripts/visualizers/sphere_fft_visualizer.gd" id="1_r30e4"]
+[ext_resource type="Shader" uid="uid://dn2m1jx378s7" path="res://shaders/sphere_fft.gdshader" id="2_r30e4"]
+[ext_resource type="Script" uid="uid://cicujugqbv2jr" path="res://scenes/mesh_fft/mesh.gd" id="3_otmvd"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_r30e4"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cdhmc"]
+noise = SubResource("FastNoiseLite_r30e4")
+
+[sub_resource type="Gradient" id="Gradient_otmvd"]
+colors = PackedColorArray(0.55112, 0.23239997, 0.83, 1, 0.18559036, 0.14233682, 0.9585963, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rbtpq"]
+gradient = SubResource("Gradient_otmvd")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4ijoi"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_534kx"]
+sky_material = SubResource("ProceduralSkyMaterial_4ijoi")
+
+[sub_resource type="Environment" id="Environment_x23rf"]
+background_mode = 2
+sky = SubResource("Sky_534kx")
+tonemap_mode = 2
+
+[sub_resource type="Gradient" id="Gradient_cdhmc"]
+offsets = PackedFloat32Array(0, 0.51457727, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.38046646, 0.38046646, 0.38046646, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_otmvd"]
+gradient = SubResource("Gradient_cdhmc")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rbtpq"]
+render_priority = 0
+shader = ExtResource("2_r30e4")
+shader_parameter/gradient = SubResource("GradientTexture1D_otmvd")
+shader_parameter/data_size = 0
+shader_parameter/max_radius = 2.3
+shader_parameter/height_scale = 1.0
+shader_parameter/texel = 0.015625
+shader_parameter/max_energy = 0.0
+shader_parameter/noise_level = 0.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_smlby"]
+radius = 0.75
+height = 1.5
+radial_segments = 32
+rings = 16
+
+[node name="SphereFFTVisualizer" type="Node2D" unique_id=585539840]
+script = ExtResource("1_r30e4")
+noise = SubResource("NoiseTexture2D_cdhmc")
+h_gradient = SubResource("GradientTexture1D_rbtpq")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1560241893]
+environment = SubResource("Environment_x23rf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1783346565]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_color = Color(0.6039216, 0.4392157, 0.2901961, 1)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=286907339]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 1, 2)
+current = true
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=1244551114]
+material_override = SubResource("ShaderMaterial_rbtpq")
+mesh = SubResource("SphereMesh_smlby")
+script = ExtResource("3_otmvd")
