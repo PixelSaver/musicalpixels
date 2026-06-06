@@ -5,6 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://se5ixnc1wwu5" path="res://scenes/mesh_fft/mesh_fft_visualizer.tscn" id="4_6q06x"]
 [ext_resource type="Script" uid="uid://dsgygmnqa35se" path="res://scripts/visualizers/simple_fft_visualizer.gd" id="4_l3cfh"]
 
+[sub_resource type="Gradient" id="Gradient_l3cfh"]
+colors = PackedColorArray(0.9254604, 0.442152, 0.8340702, 1, 0.43557456, 0.42766592, 0.9341268, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6q06x"]
+gradient = SubResource("Gradient_l3cfh")
+
 [node name="Main" type="Node2D" unique_id=1794079826]
 
 [node name="Manager" type="Node2D" parent="." unique_id=112581342 node_paths=PackedStringArray("visualizer")]
@@ -18,6 +24,7 @@ metadata/_custom_type_script = "uid://efbulppasq6b"
 
 [node name="SimpleFFTVisualizer" type="Node2D" parent="Manager" unique_id=1567437575]
 script = ExtResource("4_l3cfh")
+gradient = SubResource("GradientTexture1D_6q06x")
 metadata/_custom_type_script = "uid://dsgygmnqa35se"
 
 [node name="MeshFFTVisualizer" parent="Manager" unique_id=1766004536 instance=ExtResource("4_6q06x")]

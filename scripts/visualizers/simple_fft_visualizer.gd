@@ -3,9 +3,9 @@ class_name SimpleFFTVisualizer
 
 @export var num_bars  := 64
 @export var fft_size := 8192
-@export var bar_width := 16
+@export var bar_width := 20
 @export var max_height := 400.0
-
+@export var gradient : GradientTexture1D
 @export var sample_rate := 48000.0
 
 var bar_heights: Array[float] = []
@@ -35,11 +35,11 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 			f_max,
 			sample_rate,
 		)
-
-		#var target = clamp(energy * 5.0, 0.0, 1.0) * max_height
-		var target = energy * 5.0 * max_height
-		target = log(target+1.0)/log(10) * 50
-
+		
+		var target = log(energy * 5. * max_height + 1.0) * 45
+		#var target = pow(energy * 0.2, 0.2) * max_height * 0.8
+		#var target = log(energy * max_height + 1.0) * 100
+		
 		var speed = 0.8 if target > bar_heights[b] else 0.1
 		bar_heights[b] = lerp(bar_heights[b], target, speed)
 
@@ -53,10 +53,8 @@ func _draw() -> void:
 	var origin_y = viewport_size.y / 2.0
 
 	for b in range(num_bars):
-		var h = bar_heights[b]
+		var h = max(bar_heights[b], 0.0)
 		if h <= 2: continue
 		var x = origin_x + b * bar_width
-		var color = Color.from_hsv(remap(float(b) / num_bars, 0.0, 1.0, 0.4, 0.7), 0.8, 0.9)
-		#var color = Color.WHITE
-		draw_rect(Rect2(x, origin_y - h, bar_width - 2, h), color)
-		draw_rect(Rect2(x, origin_y, bar_width - 2, h), color)
+		draw_rect(Rect2(x, origin_y - h, bar_width - 2, h), gradient.gradient.sample(b/float(num_bars)))
+		draw_rect(Rect2(x, origin_y, bar_width - 2, h), gradient.gradient.sample(b/float(num_bars)))

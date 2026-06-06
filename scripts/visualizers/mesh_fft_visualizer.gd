@@ -3,8 +3,10 @@ class_name MeshFFTVisualizer
 
 @onready var mesh: MeshFFT = $Mesh
 
-@export var num_bars  := 64
-@export var fft_size := 8192
+@export var low_cut := 80.0
+@export var high_cut := 24000.0
+@export var num_bars  := 32
+@export var fft_size := 1024
 @export var bar_width := 16
 @export var max_height := 400.0
 
@@ -15,7 +17,12 @@ var fft_tex : ImageTexture
 
 var bar_heights: Array[float] = []
 
+func _init() -> void:
+	
+	RenderingServer.set_debug_generate_wireframes(true)
+
 func _ready() -> void:
+	
 	bar_heights.resize(num_bars)
 	bar_heights.fill(0.0)
 	fft_img = Image.create(num_bars, 1, false, Image.FORMAT_RF)
@@ -35,8 +42,8 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 		var t2 = float(b + 1) / num_bars
 
 		var nyquist := sample_rate * 0.5
-		var f_min := 20.0 * pow(nyquist / 20.0, t1)
-		var f_max := 20.0 * pow(nyquist / 20.0, t2)
+		var f_min := low_cut * pow(high_cut / low_cut, t1)
+		var f_max := low_cut * pow(high_cut / low_cut, t2)
 		
 
 		var energy := FFTHelper.get_band_energy(
@@ -46,10 +53,10 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 			f_max,
 			sample_rate,
 		)
+		#energy = pow(max(0.0, energy - 0.1), 1.5)
 
 		#var target = clamp(energy * 5.0, 0.0, 1.0) * max_height
-		var target = energy * 5.0 * max_height
-		target = log(target+1.0)/log(10) * 50
+		var target = pow(energy * 0.2, 0.3) * max_height * 0.8
 
 		var speed = 0.8 if target > bar_heights[b] else 0.1
 		bar_heights[b] = lerp(bar_heights[b], target, speed)

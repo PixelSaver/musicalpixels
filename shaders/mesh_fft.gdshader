@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode world_vertex_coords, diffuse_lambert, specular_schlick_ggx;
+render_mode wireframe;
 
 uniform sampler2D color;
 uniform sampler2D data_tex;
