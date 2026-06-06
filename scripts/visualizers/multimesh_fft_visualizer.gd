@@ -15,8 +15,9 @@ class_name MultiMeshFFTVisualizer
 
 @export var sample_rate := 48000.0
 
-@export var rings := 10
-@export var points := 500
+@export var rings := 13
+@export var points := 800
+var max_energy := 0.0;
 var mm : MultiMesh
 
 var fft_img : Image
@@ -67,6 +68,7 @@ func _ready() -> void:
 	fft_tex = ImageTexture.create_from_image(fft_img)
 	
 	#var mesh_mat = mesh.material_override as ShaderMaterial
+	sm.set_shader_parameter("gradient", h_gradient)
 	sm.set_shader_parameter("data_tex", fft_tex)
 	sm.set_shader_parameter("noise_tex", noise)
 	sm.set_shader_parameter("noise_level", noise_level)
@@ -101,7 +103,8 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 
 		var speed = 0.8 if target > bar_heights[b] else 0.1
 		bar_heights[b] = lerp(bar_heights[b], target, speed)
-
+	max_energy = bar_heights.max()
+	mm.mesh.material.set_shader_parameter("max_energy", max_energy)
 	_update_fft_tex()
 
 func _update_fft_tex() -> void:

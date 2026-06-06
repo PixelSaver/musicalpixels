@@ -9,7 +9,8 @@
 noise = SubResource("FastNoiseLite_r30e4")
 
 [sub_resource type="Gradient" id="Gradient_otmvd"]
-colors = PackedColorArray(0.55112, 0.23239997, 0.83, 1, 0.18559036, 0.14233682, 0.9585963, 1)
+offsets = PackedFloat32Array(0, 0.24048913, 1)
+colors = PackedColorArray(0.5882353, 0.16862746, 1, 1, 0.28235295, 0.30980393, 0.9098039, 1, 0.24313726, 0.7294118, 0.79607844, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_rbtpq"]
 gradient = SubResource("Gradient_otmvd")
