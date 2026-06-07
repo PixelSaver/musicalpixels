@@ -1,0 +1,57 @@
+extends VisualizerClass
+class_name AbstractFFTVisualizer
+
+var state : FFTState = FFTState.new()
+const BASS_CEIL   := 0.8
+const MID_CEIL    := 0.3
+const TREBLE_CEIL := 0.03
+
+func get_visualizer_id() -> VisualizerDatabase.VisualizerID:
+	return VisualizerDatabase.VisualizerID.ABSTRACT_FFT
+
+func begin_visualization() -> void: 
+	pass
+
+func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array, delta:float) -> void:
+	var spectrum: PackedFloat32Array = miniaudio.get_fft(settings.fft_size, true, true, 0)
+	if spectrum.size() == 0:
+		return
+	
+	var raw_bass = FFTHelper.get_band_energy(spectrum, settings.fft_size, 20, 400, settings.sample_rate)
+	var raw_mid = FFTHelper.get_band_energy(spectrum, settings.fft_size, 400, 2000, settings.sample_rate)
+	var raw_treble = FFTHelper.get_band_energy(spectrum, settings.fft_size, 4000, 12000, settings.sample_rate)
+	state.bass = lerpf(state.bass, raw_bass, settings.smoothing)
+	state.mid = lerpf(state.mid, raw_mid, settings.smoothing)
+	state.treble = lerpf(state.treble, raw_treble, 0.2)
+	print("Bass: %s\nMid: %s\nTreble: %s" % [state.bass, state.mid, state.treble])
+	state.amp = FFTHelper.get_amplitude_from_spectrum(spectrum)
+	#TODO beat detection
+	queue_redraw()
+
+func _draw() -> void:
+	var c = get_viewport_rect().size / 2.
+	
+	# figure out background color??
+	
+	# bass rectangle across screen
+	if state.bass > .01:
+		var bh:= remap(state.bass, .01, BASS_CEIL, 0, 160)
+		draw_rect(Rect2(0, c.y - bh / 2.0, c.x*2.0, bh), Color.RED)
+	# mid circle at center?
+	if state.mid > .005:
+		var r:= remap(state.mid, 0, MID_CEIL, 0, 160)
+		draw_circle(c, r, Color.YELLOW, true, -1, true)
+	
+	# treble diamond
+	var d := remap(state.treble, 0, TREBLE_CEIL, 0, 200)
+	print("Treble: %s" % state.treble)
+	if d > 1.0:
+		draw_colored_polygon(
+			PackedVector2Array([
+				c + Vector2(0,  d),
+				c + Vector2(d,  0),
+				c + Vector2(0, -d),
+				c + Vector2(-d, 0),
+			]),
+			Color.GREEN
+		)

@@ -26,7 +26,9 @@ offset_bottom = 40.0
 
 [node name="SubViewport" type="SubViewport" parent="VisualizerLayer/SubViewportContainer" unique_id=1807852142]
 transparent_bg = true
+handle_input_locally = false
 size = Vector2i(1152, 648)
+render_target_update_mode = 4
 
 [node name="Manager" type="Node2D" parent="VisualizerLayer/SubViewportContainer/SubViewport" unique_id=112581342]
 z_index = 2
@@ -58,27 +60,29 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 selected = 9
-item_count = 10
-popup/item_0/text = "0"
+item_count = 11
+popup/item_0/text = "Line Amp"
 popup/item_0/id = 0
-popup/item_1/text = "1"
+popup/item_1/text = "Bars Amp"
 popup/item_1/id = 1
-popup/item_2/text = "2"
+popup/item_2/text = "Circle Bars"
 popup/item_2/id = 2
-popup/item_3/text = "3"
+popup/item_3/text = "Bars"
 popup/item_3/id = 3
-popup/item_4/text = "4"
+popup/item_4/text = "Skew Bars"
 popup/item_4/id = 4
-popup/item_5/text = "5"
+popup/item_5/text = "Plane Mesh"
 popup/item_5/id = 5
-popup/item_6/text = "6"
+popup/item_6/text = "Multimesh"
 popup/item_6/id = 6
-popup/item_7/text = "7"
+popup/item_7/text = "Sphere"
 popup/item_7/id = 7
-popup/item_8/text = "8"
+popup/item_8/text = "Arcs"
 popup/item_8/id = 8
-popup/item_9/text = "9"
+popup/item_9/text = "Arcs 3D"
 popup/item_9/id = 9
+popup/item_10/text = "Abstract"
+popup/item_10/id = 10
 
 [node name="Panel" type="Panel" parent="CanvasLayer/Control" unique_id=1789349647]
 layout_mode = 1

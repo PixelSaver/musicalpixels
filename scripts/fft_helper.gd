@@ -49,3 +49,16 @@ static func get_band_energy(
 	if count == 0: return 0.0
 	
 	return energy / float(count)
+
+static func get_amplitude_from_spectrum(spectrum: PackedFloat32Array) -> float:
+	var sum := 0.0
+	for v in spectrum:
+		sum += v
+	return sum / spectrum.size()
+
+static func get_amplitude_from_sample(samples: PackedFloat32Array, window: int = 1024) -> float:
+	var start := maxf(0, samples.size() - window)
+	var sum := 0.0
+	for i in range(start, samples.size()):
+		sum += samples[i] * samples[i]
+	return sqrt(sum / (samples.size() - start))
