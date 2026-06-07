@@ -41,7 +41,7 @@ func _update_line() -> void:
 	if bar_heights.is_empty():
 		return
 	var viewport_size = get_viewport_rect().size
-	var total_width = settings.num_bars * settings.bar_width
+	var total_width = settings.num_bars * settings.width
 	var origin_x = (
 		viewport_size.x - total_width
 	) / 2.0
@@ -60,7 +60,7 @@ func _update_line() -> void:
 			h += bar_heights[idx]
 			count += 1.0
 		h /= count
-		var x = origin_x + p * settings.bar_width
+		var x = origin_x + p * settings.width
 		line.add_point(
 			Vector2(x, origin_y - h)
 		)

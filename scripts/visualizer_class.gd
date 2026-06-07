@@ -3,10 +3,7 @@ class_name VisualizerClass
 
 @export var settings:VisualizerSettings
 
-func _ready() -> void:
-	Global.sensitivity_delta.connect(func(del:float):
-		settings.sensitivity += del
-	)
+#func _ready() -> void:
 
 func get_visualizer_id() -> VisualizerDatabase.VisualizerID:
 	push_error("Override function to return id")
@@ -14,7 +11,9 @@ func get_visualizer_id() -> VisualizerDatabase.VisualizerID:
 
 ## Function called once the visualization is chosen
 func begin_visualization() -> void:
-	pass
+	Global.sensitivity_delta.connect(func(del:float):
+		settings.sensitivity += del
+	)
 func end_visualization() -> void:
 	queue_free()
 

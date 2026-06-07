@@ -1,9 +1,20 @@
 [gd_scene format=3 uid="uid://s15mnoepgkre"]
 
 [ext_resource type="Script" uid="uid://cw00nqrgqp1ev" path="res://scripts/visualizer_manager.gd" id="1_hyk8p"]
+[ext_resource type="Script" uid="uid://c68gnbwuwc537" path="res://scenes/main/bg.gd" id="1_k2fmo"]
 [ext_resource type="Script" uid="uid://c8sxgmb2ma16u" path="res://scenes/main/ui.gd" id="2_iuonh"]
 
 [node name="Main" type="Node2D" unique_id=1794079826]
+
+[node name="Bg" type="CanvasLayer" parent="." unique_id=1671790893]
+
+[node name="ColorRect" type="ColorRect" parent="Bg" unique_id=2009309812]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k2fmo")
 
 [node name="Manager" type="Node2D" parent="." unique_id=112581342]
 script = ExtResource("1_hyk8p")

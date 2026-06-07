@@ -49,21 +49,21 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 func _draw() -> void:
 	if bar_heights.size() == 0: return
 	var viewport_size = get_viewport_rect().size
-	var total_width = settings.num_bars * settings.bar_width
+	var total_width = settings.num_bars * settings.width
 	var origin_x = (viewport_size.x - total_width) / 2.0
 	var origin_y = viewport_size.y / 2.0
 
 	for b in range(settings.num_bars):
 		var h = bar_heights[b]
 		if h <= 1: continue
-		var x = origin_x + b * settings.bar_width
+		var x = origin_x + b * settings.width
 		var color = Color.from_hsv(remap(float(b) / settings.num_bars, 0.0, 1.0, 0.4, 0.7), 0.8, 0.9)
 		#var color = Color.WHITE
 		draw_colored_polygon(
 			PackedVector2Array([
 					Vector2(x, origin_y),          # bottom-left
-					Vector2(x + settings.bar_width, origin_y),     # bottom-right
-					Vector2(x + settings.bar_width, origin_y - h),                # top-right
+					Vector2(x + settings.width, origin_y),     # bottom-right
+					Vector2(x + settings.width, origin_y - h),                # top-right
 					Vector2(x, origin_y - h),                    # top-left
 				]),
 			color
@@ -72,8 +72,8 @@ func _draw() -> void:
 		draw_colored_polygon(
 			PackedVector2Array([
 					Vector2(x - _skew, (origin_y + h*0.5)),          # bottom-left
-					Vector2(x + settings.bar_width - _skew, (origin_y + h*0.5)),     # bottom-right
-					Vector2(x + settings.bar_width, origin_y),                # top-right
+					Vector2(x + settings.width - _skew, (origin_y + h*0.5)),     # bottom-right
+					Vector2(x + settings.width, origin_y),                # top-right
 					Vector2(x, origin_y),                    # top-left
 				]),
 			color * Color(1,1,1,0.7)

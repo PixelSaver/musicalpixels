@@ -1,14 +1,21 @@
 [gd_scene format=3 uid="uid://sy5kruyfn8fm"]
 
 [ext_resource type="Script" uid="uid://dsgygmnqa35se" path="res://scenes/visualizers/simple_fft_v.gd" id="1_mjf8b"]
+[ext_resource type="Script" uid="uid://1aqi6levv6ft" path="res://scripts/visualizer_settings.gd" id="2_qoa1h"]
 
-[sub_resource type="Gradient" id="Gradient_mjf8b"]
-colors = PackedColorArray(0.13600002, 0.8, 0.5454668, 1, 0.16, 0.4586667, 0.8, 1)
+[sub_resource type="Gradient" id="Gradient_bsjlb"]
+colors = PackedColorArray(0.79607844, 0.6509804, 0.96862745, 1, 0.98039216, 0.7019608, 0.5294118, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_qoa1h"]
-gradient = SubResource("Gradient_mjf8b")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_oqpir"]
+gradient = SubResource("Gradient_bsjlb")
+
+[sub_resource type="Resource" id="Resource_miggo"]
+script = ExtResource("2_qoa1h")
+num_bars = 64
+gradient = SubResource("GradientTexture1D_oqpir")
+metadata/_custom_type_script = "uid://1aqi6levv6ft"
 
 [node name="SimpleFFTVisualizer" type="Node2D" unique_id=234441901]
 script = ExtResource("1_mjf8b")
-gradient = SubResource("GradientTexture1D_qoa1h")
+settings = SubResource("Resource_miggo")
 metadata/_custom_type_script = "uid://dsgygmnqa35se"

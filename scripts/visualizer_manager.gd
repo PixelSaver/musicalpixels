@@ -17,7 +17,8 @@ func switch_to_visualizer(id:VisualizerDatabase.VisualizerID):
 	if Global.current_visualizer != null:
 		if Global.current_visualizer.get_visualizer_id() == id: return
 		Global.current_visualizer.end_visualization()
-	var inst := VisualizerDatabase.get_instantiated_scene(id)
+	var inst : VisualizerClass = VisualizerDatabase.get_instantiated_scene(id)
+	if inst.settings == null: inst.settings = VisualizerSettings.new()
 	add_child(inst)
 	Global.current_visualizer = inst
 	inst.begin_visualization()

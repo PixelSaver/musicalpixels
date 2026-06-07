@@ -41,13 +41,13 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 func _draw() -> void:
 	if bar_heights.size() == 0: return
 	var viewport_size = get_viewport_rect().size
-	var total_width = settings.num_bars * settings.bar_width
+	var total_width = settings.num_bars * settings.width
 	var origin_x = (viewport_size.x - total_width) / 2.0
 	var origin_y = viewport_size.y / 2.0
 
 	for b in range(settings.num_bars):
 		var h = max(bar_heights[b], 0.0)
 		if h <= 2: continue
-		var x = origin_x + b * settings.bar_width
-		draw_rect(Rect2(x, origin_y - h, settings.bar_width - 2, h), settings.gradient.gradient.sample(b/float(settings.num_bars)))
-		draw_rect(Rect2(x, origin_y, settings.bar_width - 2, h), settings.gradient.gradient.sample(b/float(settings.num_bars)))
+		var x = origin_x + b * settings.width
+		draw_rect(Rect2(x, origin_y - h, settings.width - 2, h), settings.gradient.gradient.sample(b/float(settings.num_bars)))
+		draw_rect(Rect2(x, origin_y, settings.width - 2, h), settings.gradient.gradient.sample(b/float(settings.num_bars)))
