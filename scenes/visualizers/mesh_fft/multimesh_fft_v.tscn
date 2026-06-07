@@ -2,18 +2,29 @@
 
 [ext_resource type="Script" uid="uid://rqevf5bon58j" path="res://scenes/visualizers/mesh_fft/multimesh_fft_v.gd" id="1_cna11"]
 [ext_resource type="Shader" uid="uid://hxnv4leacex" path="res://shaders/multimesh.gdshader" id="2_o3fml"]
+[ext_resource type="Script" uid="uid://1aqi6levv6ft" path="res://scripts/visualizer_settings.gd" id="3_brou6"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_r30e4"]
+[sub_resource type="Gradient" id="Gradient_g23sp"]
+colors = PackedColorArray(0, 0.7647059, 0.8039216, 1, 0.4862745, 0.15686275, 0.90588236, 1)
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cdhmc"]
-noise = SubResource("FastNoiseLite_r30e4")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_82hp5"]
+gradient = SubResource("Gradient_g23sp")
 
-[sub_resource type="Gradient" id="Gradient_otmvd"]
-offsets = PackedFloat32Array(0, 0.24048913, 1)
-colors = PackedColorArray(0.5882353, 0.16862746, 1, 1, 0.28235295, 0.30980393, 0.9098039, 1, 0.24313726, 0.7294118, 0.79607844, 1)
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_brou6"]
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_rbtpq"]
-gradient = SubResource("Gradient_otmvd")
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_g23sp"]
+noise = SubResource("FastNoiseLite_brou6")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_82hp5"]
+
+[sub_resource type="Resource" id="Resource_f70ap"]
+script = ExtResource("3_brou6")
+max_height = 150.0
+noise_level = 0.1
+noise = SubResource("NoiseTexture2D_g23sp")
+noise_func = SubResource("FastNoiseLite_82hp5")
+gradient = SubResource("GradientTexture1D_82hp5")
+metadata/_custom_type_script = "uid://1aqi6levv6ft"
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4ijoi"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -30,9 +41,7 @@ tonemap_mode = 2
 [node name="MultimeshFFTVisualizer" type="Node2D" unique_id=585539840]
 script = ExtResource("1_cna11")
 mm_shader = ExtResource("2_o3fml")
-noise_level = 0.05
-noise = SubResource("NoiseTexture2D_cdhmc")
-h_gradient = SubResource("GradientTexture1D_rbtpq")
+settings = SubResource("Resource_f70ap")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1560241893]
 environment = SubResource("Environment_x23rf")

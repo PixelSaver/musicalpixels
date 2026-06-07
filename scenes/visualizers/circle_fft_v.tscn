@@ -9,7 +9,7 @@
 
 [sub_resource type="Resource" id="Resource_j75ck"]
 script = ExtResource("2_qxwth")
-radius = 300.0
+radius = 250.0
 noise = SubResource("NoiseTexture2D_qxwth")
 noise_func = SubResource("FastNoiseLite_j75ck")
 metadata/_custom_type_script = "uid://1aqi6levv6ft"

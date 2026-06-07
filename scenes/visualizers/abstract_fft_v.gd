@@ -25,7 +25,6 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 	state.bass = _smooth(state.bass, raw_bass)
 	state.mid = _smooth(state.mid, raw_mid)
 	state.treble = _smooth(state.treble, raw_treble)
-	print("Bass: %s\nMid: %s\nTreble: %s" % [state.bass, state.mid, state.treble])
 	state.amp = FFTHelper.get_amplitude_from_spectrum(spectrum)
 	#TODO beat detection
 	queue_redraw()
@@ -38,15 +37,14 @@ func _draw() -> void:
 	# bass rectangle across screen
 	if state.bass > .01:
 		var bh:= remap(state.bass, .01, BASS_CEIL, 0, 160)
-		draw_rect(Rect2(0, c.y - bh / 2.0, c.x*2.0, bh), Color.RED)
+		draw_rect(Rect2(0, c.y - bh / 2.0, c.x*2.0, bh), Color("#fab0af"))
 	# mid circle at center?
 	if state.mid > .005:
 		var r:= remap(state.mid, 0, MID_CEIL, 0, 160)
-		draw_circle(c, r, Color.YELLOW, true, -1, true)
+		draw_circle(c, r, Color("#9ca8c6"), true, -1, true)
 	
 	# treble diamond
 	var d := remap(state.treble, 0, TREBLE_CEIL, 0, 160)
-	print("Treble: %s" % state.treble)
 	if d > 1.0:
 		draw_colored_polygon(
 			PackedVector2Array([
@@ -55,7 +53,7 @@ func _draw() -> void:
 				c + Vector2(0, -d),
 				c + Vector2(-d, 0),
 			]),
-			Color.GREEN
+			Color("#c57ffe")
 		)
 
 func _smooth(from:float, to:float) -> float:

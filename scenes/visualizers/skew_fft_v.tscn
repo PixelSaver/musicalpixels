@@ -1,7 +1,14 @@
 [gd_scene format=3 uid="uid://bbktr14mr1eoc"]
 
 [ext_resource type="Script" uid="uid://efbulppasq6b" path="res://scenes/visualizers/skew_fft_v.gd" id="1_bttkv"]
+[ext_resource type="Script" uid="uid://1aqi6levv6ft" path="res://scripts/visualizer_settings.gd" id="2_sfu21"]
+
+[sub_resource type="Resource" id="Resource_d8jja"]
+script = ExtResource("2_sfu21")
+num_bars = 64
+metadata/_custom_type_script = "uid://1aqi6levv6ft"
 
 [node name="SkewFFTVisualizer" type="Node2D" unique_id=1557889592]
 script = ExtResource("1_bttkv")
+settings = SubResource("Resource_d8jja")
 metadata/_custom_type_script = "uid://efbulppasq6b"

@@ -2,21 +2,20 @@
 
 [ext_resource type="Script" uid="uid://bpwif440eepyt" path="res://scenes/visualizers/mesh_fft/mesh_fft_v.gd" id="1_r5nts"]
 [ext_resource type="Shader" uid="uid://d4lig7kfcn40w" path="res://shaders/mesh_fft.gdshader" id="2_4ijoi"]
+[ext_resource type="Script" uid="uid://1aqi6levv6ft" path="res://scripts/visualizer_settings.gd" id="2_s6wfr"]
 [ext_resource type="Script" uid="uid://cicujugqbv2jr" path="res://scenes/visualizers/mesh_fft/mesh.gd" id="3_4ijoi"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_4ijoi"]
-seed = 1
+[sub_resource type="Gradient" id="Gradient_yaxjd"]
+offsets = PackedFloat32Array(0.001222494, 1)
+colors = PackedColorArray(0.84, 0.1512, 0.30043998, 1, 0.86, 0.55384004, 0.094600014, 1)
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_534kx"]
-noise = SubResource("FastNoiseLite_4ijoi")
-seamless = true
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ky5my"]
+gradient = SubResource("Gradient_yaxjd")
 
-[sub_resource type="Gradient" id="Gradient_4ijoi"]
-offsets = PackedFloat32Array(0, 0.55842394, 1)
-colors = PackedColorArray(0.85, 0.2805, 0.35643324, 1, 0.96386784, 0.59023625, 0.2674447, 1, 0.8962227, 0.827331, 0.10203504, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_534kx"]
-gradient = SubResource("Gradient_4ijoi")
+[sub_resource type="Resource" id="Resource_rxrb5"]
+script = ExtResource("2_s6wfr")
+gradient = SubResource("GradientTexture1D_ky5my")
+metadata/_custom_type_script = "uid://1aqi6levv6ft"
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4ijoi"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -55,10 +54,7 @@ subdivide_depth = 20
 
 [node name="MeshFFTVisualizer" type="Node2D" unique_id=1766004536]
 script = ExtResource("1_r5nts")
-low_cut = 40.0
-high_cut = 48000.0
-noise = SubResource("NoiseTexture2D_534kx")
-h_gradient = SubResource("GradientTexture1D_534kx")
+settings = SubResource("Resource_rxrb5")
 metadata/_custom_type_script = "uid://bpwif440eepyt"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1560241893]
