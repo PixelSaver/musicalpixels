@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c5wg0depvsowb"]
 
-[ext_resource type="Script" uid="uid://rqevf5bon58j" path="res://scripts/visualizers/multimesh_fft_visualizer.gd" id="1_cna11"]
+[ext_resource type="Script" uid="uid://rqevf5bon58j" path="res://scenes/visualizers/mesh_fft/multimesh_fft_v.gd" id="1_cna11"]
 [ext_resource type="Shader" uid="uid://hxnv4leacex" path="res://shaders/multimesh.gdshader" id="2_o3fml"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_r30e4"]

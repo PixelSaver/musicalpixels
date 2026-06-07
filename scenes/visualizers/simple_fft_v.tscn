@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://sy5kruyfn8fm"]
+
+[ext_resource type="Script" uid="uid://dsgygmnqa35se" path="res://scenes/visualizers/simple_fft_v.gd" id="1_mjf8b"]
+
+[node name="SimpleFFTVisualizer" type="Node2D" unique_id=234441901]
+script = ExtResource("1_mjf8b")
+metadata/_custom_type_script = "uid://dsgygmnqa35se"

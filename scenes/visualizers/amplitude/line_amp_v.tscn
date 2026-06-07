@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://of3okxgih46b"]
+
+[ext_resource type="Script" uid="uid://b4aso5sykhyq8" path="res://scenes/visualizers/amplitude/line_amp_v.gd" id="1_6qn77"]
+
+[node name="LineAmpV" type="Node2D" unique_id=1141996582]
+script = ExtResource("1_6qn77")
+metadata/_custom_type_script = "uid://b4aso5sykhyq8"

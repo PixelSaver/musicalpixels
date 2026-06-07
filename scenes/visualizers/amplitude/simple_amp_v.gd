@@ -1,5 +1,5 @@
 extends VisualizerClass
-class_name SimpleVisualizer
+class_name SimpleAmplitudeVisualizer
 
 const NUM_BARS = 64
 const BAR_WIDTH = 16

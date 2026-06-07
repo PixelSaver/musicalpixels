@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://df03fop3q15aq"]
 
-[ext_resource type="Script" uid="uid://dpvdk46375lxf" path="res://scripts/visualizers/sphere_fft_visualizer.gd" id="1_r30e4"]
+[ext_resource type="Script" uid="uid://dpvdk46375lxf" path="res://scenes/visualizers/mesh_fft/sphere_fft_v.gd" id="1_r30e4"]
 [ext_resource type="Shader" uid="uid://dn2m1jx378s7" path="res://shaders/sphere_fft.gdshader" id="2_r30e4"]
-[ext_resource type="Script" uid="uid://cicujugqbv2jr" path="res://scenes/mesh_fft/mesh.gd" id="3_otmvd"]
+[ext_resource type="Script" uid="uid://cicujugqbv2jr" path="res://scenes/visualizers/mesh_fft/mesh.gd" id="3_otmvd"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_r30e4"]
 

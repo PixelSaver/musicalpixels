@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://b1q8uj2316onh"]
+
+[ext_resource type="Script" uid="uid://h044wxwc0avl" path="res://scenes/visualizers/amplitude/simple_amp_v.gd" id="1_bb1m5"]
+
+[node name="SimpleAmpV" type="Node2D" unique_id=1359166605]
+script = ExtResource("1_bb1m5")
+metadata/_custom_type_script = "uid://h044wxwc0avl"

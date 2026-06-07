@@ -9,6 +9,9 @@ func _ready() -> void:
 	add_child(miniaudio)
 	miniaudio.start()
 
+func switch_to_visualizer(id:VisualizerDatabase.VisualizerID):
+	pass
+
 func _process(delta: float) -> void:
 	var vis := Global.current_visualizer
 	if vis == null: return

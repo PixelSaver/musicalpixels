@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://badr82sh8dg53"]
+
+[ext_resource type="Script" uid="uid://cbrlgv88k47l3" path="res://scenes/visualizers/circle_fft_v.gd" id="1_f24ft"]
+
+[node name="CircleFFTVisualizer" type="Node2D" unique_id=1025675344]
+script = ExtResource("1_f24ft")
+metadata/_custom_type_script = "uid://cbrlgv88k47l3"

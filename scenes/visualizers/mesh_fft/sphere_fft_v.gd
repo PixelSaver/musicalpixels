@@ -6,7 +6,7 @@ class_name SphereFFTVisualizer
 @export var low_cut := 80.0
 @export var high_cut := 24000.0
 @export var num_bars  := 32
-@export var fft_size := 1024
+@export var fft_size : FFTHelper.Sizes = FFTHelper.Sizes.SUPER
 @export var bar_width := 16
 @export var max_height := 400.0
 @export var noise_level := 1.0

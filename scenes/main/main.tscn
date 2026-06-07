@@ -1,13 +1,10 @@
 [gd_scene format=3 uid="uid://s15mnoepgkre"]
 
 [ext_resource type="Script" uid="uid://cw00nqrgqp1ev" path="res://scripts/visualizer_manager.gd" id="1_hyk8p"]
-[ext_resource type="PackedScene" uid="uid://df03fop3q15aq" path="res://scenes/mesh_fft/sphere_fft_visualizer.tscn" id="2_iuonh"]
 
 [node name="Main" type="Node2D" unique_id=1794079826]
 
 [node name="Manager" type="Node2D" parent="." unique_id=112581342 node_paths=PackedStringArray("visualizer")]
 script = ExtResource("1_hyk8p")
-visualizer = NodePath("SphereFFTVisualizer")
+visualizer = NodePath("")
 metadata/_custom_type_script = "uid://cw00nqrgqp1ev"
-
-[node name="SphereFFTVisualizer" parent="Manager" unique_id=585539840 instance=ExtResource("2_iuonh")]

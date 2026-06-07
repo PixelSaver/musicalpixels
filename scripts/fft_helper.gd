@@ -1,9 +1,24 @@
 class_name FFTHelper
 extends RefCounted
 
+enum Sizes {
+	## 512
+	TINY=512,
+	## 1024
+	SMALL=1024,
+	## 2048
+	MEDIUM=2048,
+	## 4096
+	HIGH=4096,
+	## 8192
+	SUPER=8192,
+	## 16384
+	MAX=16384,
+}
+
 static func get_band_energy(
 	spectrum: PackedFloat32Array,
-	fft_size: int,
+	fft_size: Sizes,
 	f_min: float,
 	f_max: float,
 	sample_rate: float

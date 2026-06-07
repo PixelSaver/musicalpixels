@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*uid://5dn27c8vcyqf"
+VisualizerDatabase="*uid://dfg1kkaie47gf"
 
 [display]
 
@@ -36,8 +37,8 @@ enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
 
 folder_colors={
 "res://scenes/": "blue",
+"res://scenes/visualizers/": "yellow",
 "res://scripts/": "green",
-"res://scripts/visualizers/": "yellow",
 "res://shaders/": "purple"
 }
 

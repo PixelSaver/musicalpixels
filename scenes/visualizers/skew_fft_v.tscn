@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bbktr14mr1eoc"]
+
+[ext_resource type="Script" uid="uid://efbulppasq6b" path="res://scenes/visualizers/skew_fft_v.gd" id="1_bttkv"]
+
+[node name="SkewFFTVisualizer" type="Node2D" unique_id=1557889592]
+script = ExtResource("1_bttkv")
+metadata/_custom_type_script = "uid://efbulppasq6b"
