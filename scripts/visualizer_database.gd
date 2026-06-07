@@ -8,7 +8,7 @@ enum VisualizerID {
 	SKEW_FFT,
 	MESH_FFT,
 	MULTIMESH_FFT,
-	RINGS_FFT,
+	#RINGS_FFT,
 	SPHERE_FFT,
 	ARCS_FFT,
 	ARCS_MESH_FFT,
@@ -28,8 +28,8 @@ const VISUALIZERS := {
 		preload("res://scenes/visualizers/mesh_fft/mesh_fft_v.tscn"),
 	VisualizerID.MULTIMESH_FFT:
 		preload("res://scenes/visualizers/mesh_fft/multimesh_fft_v.tscn"),
-	VisualizerID.RINGS_FFT:
-		preload("res://scenes/visualizers/mesh_fft/rings_fft_v.tscn"),
+	#VisualizerID.RINGS_FFT:
+		#preload("res://scenes/visualizers/mesh_fft/rings_fft_v.tscn"),
 	VisualizerID.SPHERE_FFT:
 		preload("res://scenes/visualizers/mesh_fft/sphere_fft_v.tscn"),
 	VisualizerID.ARCS_FFT:

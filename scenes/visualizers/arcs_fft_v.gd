@@ -16,6 +16,7 @@ var colors : Array[Color]= [
 ## b is the length of the arc
 ## c is the change/energy per frame
 ## d is the 2nd derivative
+## e is smoothed 2nd derivative
 var arc_lengths: Array[Array] = []
 var max_energy := -1.0
 var cum_time := 0.0
@@ -26,7 +27,7 @@ func get_visualizer_id() -> VisualizerDatabase.VisualizerID:
 func begin_visualization() -> void: 
 	arc_lengths.clear()
 	for i in range(settings.num_bars):
-		arc_lengths.append([randf_range(0.0, TAU), 0.0, 0.0, 0.0])
+		arc_lengths.append([randf_range(0.0, TAU), 0.0, 0.0, 0.0, 0.0])
 	cum_time = randfn(0.0, 100.)
 
 func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array, delta:float) -> void:
@@ -74,7 +75,8 @@ func _draw() -> void:
 		## d is the 2nd derivative
 		var _set = arc_lengths[i]
 		var rad = init_ring_size + i * ring_separation
-		var advance = _set[3] * .1 if _set[3] > 0. else _set[3] * .05
+		_set[4] = lerp(_set[4], _set[3], 0.1)
+		var advance = _set[4] * .1 if _set[4] > 0. else _set[4] * .05
 		advance += settings.noise_func.get_noise_2d(cum_time, i*30.) * .1 * (.05 + max_energy) * settings.noise_level * log(i+1)
 		var theta = _set[0] + advance
 		_set[0] = theta
@@ -87,6 +89,6 @@ func _draw() -> void:
 			theta+length, 
 			ring_resolution, 
 			colors[i % 4].lightened(remap(length, 0.0, TAU, -0.2, 0.2)), 
-			20 + pow(abs(_set[3]), 0.3) * (-1 if _set[3] < 0.0 else 1) * 3,
+			20 + pow(abs(_set[4]), 0.3) * (-1 if _set[4] < 0.0 else 1) * 3,
 			true,
 		)

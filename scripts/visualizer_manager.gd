@@ -11,7 +11,7 @@ class_name VisualizerManager
 func _ready() -> void:
 	add_child(miniaudio)
 	miniaudio.start()
-	switch_to_visualizer(visualizer_chosen)
+	Global.switch_to_visualizer.connect(switch_to_visualizer)
 
 func switch_to_visualizer(id:VisualizerDatabase.VisualizerID):
 	if Global.current_visualizer != null:

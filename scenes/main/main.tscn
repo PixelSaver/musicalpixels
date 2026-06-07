@@ -1,10 +1,76 @@
 [gd_scene format=3 uid="uid://s15mnoepgkre"]
 
 [ext_resource type="Script" uid="uid://cw00nqrgqp1ev" path="res://scripts/visualizer_manager.gd" id="1_hyk8p"]
+[ext_resource type="Script" uid="uid://c8sxgmb2ma16u" path="res://scenes/main/ui.gd" id="2_iuonh"]
 
 [node name="Main" type="Node2D" unique_id=1794079826]
 
 [node name="Manager" type="Node2D" parent="." unique_id=112581342]
 script = ExtResource("1_hyk8p")
-visualizer_chosen = 10
+visualizer_chosen = 9
 metadata/_custom_type_script = "uid://cw00nqrgqp1ev"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1008285568]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1140464841]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_iuonh")
+
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/Control" unique_id=1835523140]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.759
+anchor_top = 0.05
+anchor_right = 0.975
+anchor_bottom = 0.143
+grow_horizontal = 2
+grow_vertical = 2
+selected = 9
+item_count = 10
+popup/item_0/text = "0"
+popup/item_0/id = 0
+popup/item_1/text = "1"
+popup/item_1/id = 1
+popup/item_2/text = "2"
+popup/item_2/id = 2
+popup/item_3/text = "3"
+popup/item_3/id = 3
+popup/item_4/text = "4"
+popup/item_4/id = 4
+popup/item_5/text = "5"
+popup/item_5/id = 5
+popup/item_6/text = "6"
+popup/item_6/id = 6
+popup/item_7/text = "7"
+popup/item_7/id = 7
+popup/item_8/text = "8"
+popup/item_8/id = 8
+popup/item_9/text = "9"
+popup/item_9/id = 9
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Control" unique_id=1789349647]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.961
+anchor_right = 0.174
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Control/Panel" unique_id=529939431]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "MusicalPixels by Pixelsaver"
+horizontal_alignment = 1
+vertical_alignment = 1
