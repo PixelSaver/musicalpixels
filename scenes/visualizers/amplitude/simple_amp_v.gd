@@ -3,7 +3,7 @@ class_name SimpleAmplitudeVisualizer
 
 const NUM_BARS = 64
 const BAR_WIDTH = 16
-const MAX_HEIGHT = 400
+const MAX_HEIGHT = 150
 const SMOOTHING = 0.15
 
 var bar_heights: Array[float] = []
