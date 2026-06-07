@@ -35,7 +35,7 @@ const VISUALIZERS := {
 func get_random_id() -> VisualizerID:
 	return VISUALIZERS.keys().pick_random()
 func get_random_visualizer() -> VisualizerClass:
-	return self.instantiate(get_random_id())
+	return self.get_instantiated_scene(get_random_id())
 func get_scene(id:VisualizerID):
 	return VISUALIZERS[id]
 func get_instantiated_scene(id:VisualizerID) -> VisualizerClass:

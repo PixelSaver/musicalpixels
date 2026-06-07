@@ -9,6 +9,9 @@ const SMOOTHING = 0.15
 var bar_heights: Array[float] = []
 var line := Line2D.new()
 
+func get_visualizer_id() -> VisualizerDatabase.VisualizerID:
+	return VisualizerDatabase.VisualizerID.LINE_AMP
+
 func _ready() -> void:
 	add_child(line)
 	bar_heights.resize(NUM_BARS)

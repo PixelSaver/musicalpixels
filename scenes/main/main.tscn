@@ -4,7 +4,7 @@
 
 [node name="Main" type="Node2D" unique_id=1794079826]
 
-[node name="Manager" type="Node2D" parent="." unique_id=112581342 node_paths=PackedStringArray("visualizer")]
+[node name="Manager" type="Node2D" parent="." unique_id=112581342]
 script = ExtResource("1_hyk8p")
-visualizer = NodePath("")
+visualizer_chosen = 3
 metadata/_custom_type_script = "uid://cw00nqrgqp1ev"

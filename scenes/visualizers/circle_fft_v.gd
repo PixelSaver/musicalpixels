@@ -13,6 +13,8 @@ var offset := 0.0
 
 var bar_heights: Array[float] = []
 
+func get_visualizer_id() -> VisualizerDatabase.VisualizerID:
+	return VisualizerDatabase.VisualizerID.CIRCLE_FFT
 func _ready() -> void:
 	fft_size = pow(2,fft_size_exp)
 	bar_heights.resize(num_bars)

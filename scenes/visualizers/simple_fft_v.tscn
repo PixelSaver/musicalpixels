@@ -2,6 +2,13 @@
 
 [ext_resource type="Script" uid="uid://dsgygmnqa35se" path="res://scenes/visualizers/simple_fft_v.gd" id="1_mjf8b"]
 
+[sub_resource type="Gradient" id="Gradient_mjf8b"]
+colors = PackedColorArray(0.13600002, 0.8, 0.5454668, 1, 0.16, 0.4586667, 0.8, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qoa1h"]
+gradient = SubResource("Gradient_mjf8b")
+
 [node name="SimpleFFTVisualizer" type="Node2D" unique_id=234441901]
 script = ExtResource("1_mjf8b")
+gradient = SubResource("GradientTexture1D_qoa1h")
 metadata/_custom_type_script = "uid://dsgygmnqa35se"

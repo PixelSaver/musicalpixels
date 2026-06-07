@@ -10,6 +10,8 @@ class_name SimpleFFTVisualizer
 
 var bar_heights: Array[float] = []
 
+func get_visualizer_id() -> VisualizerDatabase.VisualizerID:
+	return VisualizerDatabase.VisualizerID.SIMPLE_FFT
 func _ready() -> void:
 	bar_heights.resize(num_bars)
 	bar_heights.fill(0.0)

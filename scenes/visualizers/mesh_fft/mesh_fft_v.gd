@@ -20,6 +20,8 @@ var fft_tex : ImageTexture
 
 var bar_heights: Array[float] = []
 
+func get_visualizer_id() -> VisualizerDatabase.VisualizerID:
+	return VisualizerDatabase.VisualizerID.MESH_FFT
 func _init() -> void:
 	
 	RenderingServer.set_debug_generate_wireframes(true)
