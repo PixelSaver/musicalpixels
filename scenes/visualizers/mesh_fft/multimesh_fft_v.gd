@@ -15,8 +15,8 @@ class_name MultiMeshFFTVisualizer
 
 @export var sample_rate := 48000.0
 
-@export var rings := 13
-@export var points := 800
+@export var rings := 10
+@export var points := 400
 var max_energy := 0.0;
 var mm : MultiMesh
 

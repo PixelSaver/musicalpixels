@@ -1,4 +1,5 @@
 shader_type spatial;
+render_mode unshaded;
 uniform sampler2D data_tex;
 uniform float rings = 3.0;
 uniform float points = 5.0;

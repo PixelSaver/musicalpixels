@@ -30,7 +30,7 @@ tonemap_mode = 2
 [node name="MultimeshFFTVisualizer" type="Node2D" unique_id=585539840]
 script = ExtResource("1_cna11")
 mm_shader = ExtResource("2_o3fml")
-noise_level = 0.1
+noise_level = 0.05
 noise = SubResource("NoiseTexture2D_cdhmc")
 h_gradient = SubResource("GradientTexture1D_rbtpq")
 

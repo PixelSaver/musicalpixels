@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://d308wjiciu02i"]
+
+[ext_resource type="Script" uid="uid://chkpgjer66rxa" path="res://scenes/visualizers/mesh_fft/arcs_mesh_fft_v.gd" id="1_2dqkc"]
+[ext_resource type="Script" uid="uid://1aqi6levv6ft" path="res://scripts/visualizer_settings.gd" id="2_lbk7d"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_lbk7d"]
+seed = 10
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_i1002"]
+noise = SubResource("FastNoiseLite_lbk7d")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pnppk"]
+seed = 7
+
+[sub_resource type="Resource" id="Resource_gidke"]
+script = ExtResource("2_lbk7d")
+num_bars = 10
+max_height = 100.0
+noise_level = 0.3
+noise = SubResource("NoiseTexture2D_i1002")
+noise_func = SubResource("FastNoiseLite_pnppk")
+metadata/_custom_type_script = "uid://1aqi6levv6ft"
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lbk7d"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_i1002"]
+sky_material = SubResource("ProceduralSkyMaterial_lbk7d")
+
+[sub_resource type="Environment" id="Environment_pnppk"]
+background_mode = 2
+sky = SubResource("Sky_i1002")
+tonemap_mode = 2
+
+[node name="ArcsMeshFFTVisualizer" type="Node2D" unique_id=873698239]
+script = ExtResource("1_2dqkc")
+settings = SubResource("Resource_gidke")
+metadata/_custom_type_script = "uid://chkpgjer66rxa"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=938154032]
+environment = SubResource("Environment_pnppk")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1069672744]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1497868133]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 5, 0)

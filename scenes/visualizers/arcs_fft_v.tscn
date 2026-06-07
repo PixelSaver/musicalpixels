@@ -10,20 +10,21 @@ seed = 10
 noise = SubResource("FastNoiseLite_m303b")
 seamless = true
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_nokvj"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_sp2qv"]
 seed = 7
 
-[sub_resource type="Resource" id="Resource_nokvj"]
+[sub_resource type="Resource" id="Resource_0jd48"]
 script = ExtResource("2_m303b")
 num_bars = 10
 max_height = 100.0
+noise_level = 0.3
 noise = SubResource("NoiseTexture2D_nokvj")
-noise_func = SubResource("FastNoiseLite_nokvj")
+noise_func = SubResource("FastNoiseLite_sp2qv")
 metadata/_custom_type_script = "uid://1aqi6levv6ft"
 
 [node name="ArcsFFTVisualizer" type="Node2D" unique_id=1226367215]
 script = ExtResource("1_luvj4")
-settings = SubResource("Resource_nokvj")
+settings = SubResource("Resource_0jd48")
 ring_separation = 50.0
 init_ring_size = 50.0
 metadata/_custom_type_script = "uid://b258xhk2ol4yx"
