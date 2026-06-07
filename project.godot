@@ -16,6 +16,7 @@ config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/bg_color=Color(0.14117648, 0.14117648, 0.14117648, 0)
 boot_splash/show_image=false
 boot_splash/use_filter=false
+boot_splash/image="uid://bc16mjbxukwfn"
 config/icon="res://icon.svg"
 
 [autoload]
@@ -27,6 +28,9 @@ VisualizerDatabase="*uid://dfg1kkaie47gf"
 
 window/size/transparent=true
 window/subwindows/embed_subwindows=false
+window/stretch/mode="canvas_items"
+window/stretch/aspect="ignore"
+window/per_pixel_transparency/allowed=true
 
 [editor_plugins]
 
@@ -50,4 +54,5 @@ folder_colors={
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
 viewport/transparent_background=true
