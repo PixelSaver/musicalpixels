@@ -63,9 +63,12 @@ Honestly, there is so much more to do! I'll leave a list down below for what ide
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Screenshots
+### Screenshots & Videos
 
 Reminder: These backgrounds are going to be transparent on Windows (and possibly on Mac??)
+
+https://github.com/user-attachments/assets/c669b7a5-f19d-426c-b282-b522e31e1bb3
+
 
 <img src="media/1.png" alt="Screenshot of one of the visualizers">
 <img src="media/2.png" alt="Screenshot of one of the visualizers">
