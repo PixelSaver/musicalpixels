@@ -8,6 +8,7 @@
   <ol>
 	<a href="#about-the-project">About The Project</a>
 	<li><a href="#built-with">Built With</a></li>
+	<li><a href="#roadmap">Roadmap</a></li>
 	<li><a href="#license">License</a></li>
 	<li><a href="#contact">Contact</a></li>
 	<li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -38,28 +39,7 @@ It's got:
 ### What do I take out of this?
 Learn C... The gd extension is so useful. Also, there are so many cool people out there, that it's a shame not to do research on what people have done already!
 
-### What could I do from now?
-Honestly, there is so much more to do! I'll leave a list down below for what ideas I have now, but I'm dropping this project because I don't want to be stuck on this for too long, and I have other ideas for things to do!! I think. If there's at least 10 people who star this or contact me, I'll be happy to come back and improve this by miles!
-- [ ] Better UI for selection & customization
-    - [ ] Gradients
-    - [ ] Sensitivity
-    - [ ] Etc
-- [ ] Transitions between visualizers
-- [ ] More 3d animations
-    - [ ] Rotating cylinder of 3d arcs
-    - [ ] Spherical arcs spinning
-    - [ ] Moving through a sea of shapes
-- [ ] More responsiveness
-    - [ ] Tuning to specific sections (bass, mid, treble)
-    - [ ] Reacting to song sections (intro, rise, drop, etc)
-- [ ] More colors
-- [ ] Reading from microphone / chosen input 
-- [ ] Actual borderless window you can drag and resize, so it looks super cool!
-- [ ] Loading custom files
-    - [ ] Displaying lyrics
-    - [ ] Cool lyrics (to the tune / beat)
-    - [ ] Lyrics being placed like a word cloud
-- [ ] More that I haven't thought of!
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -103,6 +83,29 @@ This section should list any major frameworks/libraries used to bootstrap your p
 * [![JQuery][JQuery.com]][JQuery-url]-->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Roadmap
+Honestly, there is so much more to do! I'll leave a list down below for what ideas I have now, but I'm dropping this project because I don't want to be stuck on this for too long, and I have other ideas for things to do!! I think. If there's at least 10 people who star this or contact me, I'll be happy to come back and improve this by miles!
+- [ ] Better UI for selection & customization
+    - [ ] Gradients
+    - [ ] Sensitivity
+    - [ ] Etc
+- [ ] Transitions between visualizers
+- [ ] More 3d animations
+    - [ ] Rotating cylinder of 3d arcs
+    - [ ] Spherical arcs spinning
+    - [ ] Moving through a sea of shapes
+- [ ] More responsiveness
+    - [ ] Tuning to specific sections (bass, mid, treble)
+    - [ ] Reacting to song sections (intro, rise, drop, etc)
+- [ ] More colors
+- [ ] Reading from microphone / chosen input 
+- [ ] Actual borderless window you can drag and resize, so it looks super cool!
+- [ ] Loading custom files
+    - [ ] Displaying lyrics
+    - [ ] Cool lyrics (to the tune / beat)
+    - [ ] Lyrics being placed like a word cloud
+- [ ] More that I haven't thought of!
 
 <!-- LICENSE -->
 ## License
