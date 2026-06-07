@@ -31,7 +31,7 @@ void vertex() {
 	vec2 uv = base.xz * 0.2 + TIME * .1;
 	
 	float ny = texture(noise_tex, uv).r * noise_level * (ring+1.) * max_energy * .01;
-	offset.y += (ny - 0.5) * 2.0;
+	offset.y += (ny - 0.5) * 1.0;
 	float nx = texture(noise_tex, fract(uv+ny)).r * noise_level * (ring+1.) * max_energy * .03;
 	offset.x = (nx - 0.5) * 2.0;
 	float nz = texture(noise_tex, fract(uv+ny*.3)).r * noise_level * (ring+1.) * max_energy * .03;
