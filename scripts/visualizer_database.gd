@@ -10,6 +10,7 @@ enum VisualizerID {
 	MULTIMESH_FFT,
 	RINGS_FFT,
 	SPHERE_FFT,
+	ARCS_FFT,
 }
 const VISUALIZERS := {
 	VisualizerID.LINE_AMP:
@@ -30,6 +31,8 @@ const VISUALIZERS := {
 		preload("res://scenes/visualizers/mesh_fft/rings_fft_v.tscn"),
 	VisualizerID.SPHERE_FFT:
 		preload("res://scenes/visualizers/mesh_fft/sphere_fft_v.tscn"),
+	VisualizerID.ARCS_FFT:
+		preload("res://scenes/visualizers/arcs_fft_v.tscn"),
 }
 
 func get_random_id() -> VisualizerID:

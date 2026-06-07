@@ -2,7 +2,7 @@ extends Node2D
 class_name VisualizerManager
 
 @onready var miniaudio = MiniaudioClass.new()
-@export var visualizer_chosen : VisualizerDatabase.VisualizerID  :
+@export var visualizer_chosen : VisualizerDatabase.VisualizerID :
 	set(id):
 		switch_to_visualizer(id)
 		visualizer_chosen = id
