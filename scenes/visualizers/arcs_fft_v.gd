@@ -46,7 +46,7 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 			f_max,
 			settings.sample_rate,
 		)
-		var target = pow(energy * 0.2, 0.26) * settings.max_height * 0.5
+		var target = pow(energy * 0.2, 0.26) * settings.max_height * 0.5 * settings.get_sensitivity_value()
 		
 		var speed = 0.8 if target > arc_lengths[b][2] else 0.1
 		var new_len = lerp(arc_lengths[b][2], target, speed)

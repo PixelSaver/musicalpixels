@@ -17,6 +17,7 @@ seed = 7
 script = ExtResource("2_lbk7d")
 num_bars = 10
 max_height = 100.0
+radius = 5.0
 noise_level = 0.3
 noise = SubResource("NoiseTexture2D_i1002")
 noise_func = SubResource("FastNoiseLite_pnppk")
@@ -36,9 +37,7 @@ tonemap_mode = 2
 
 [node name="ArcsMeshFFTVisualizer" type="Node2D" unique_id=873698239]
 script = ExtResource("1_2dqkc")
-settings = SubResource("Resource_gidke")
 ring_separation = 5.0
-init_ring_size = 5.0
 settings = SubResource("Resource_gidke")
 metadata/_custom_type_script = "uid://chkpgjer66rxa"
 

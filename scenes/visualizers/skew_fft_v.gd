@@ -38,7 +38,7 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 			settings.sample_rate,
 		)
 
-		var target = energy * 5.0 * settings.max_height
+		var target = energy * 5.0 * settings.max_height * settings.get_sensitivity_value()
 		target = log(target+1.0)/log(10) * 100
 
 		var speed = 0.8 if target > bar_heights[b] else 0.1

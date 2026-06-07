@@ -17,6 +17,12 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		self.modulate.a = 1.0
 		countdown = countdown_max
+	if event.is_action_pressed("scroll_up"):
+		Global.sensitivity_delta.emit(1.0)
+		print("Sense up")
+	if event.is_action_pressed("scroll_down"):
+		Global.sensitivity_delta.emit(-1.0)
+		print("Sense down")
 
 func _process(delta: float) -> void:
 	countdown -= delta

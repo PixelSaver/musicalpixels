@@ -1,10 +1,9 @@
 extends VisualizerClass
 class_name ArcsMeshFFTVisualizer
 
-@export var settings : VisualizerSettings = VisualizerSettings.new()
 @export var ring_separation := 1.0
 @export var ring_resolution := 40
-@export var init_ring_size := 0.0
+#@export var init_ring_size := 0.0
 var colors : Array[Color]= [
 	Color.from_string("#ec4503", Color.AQUAMARINE),
 	Color.from_string("#ffac11", Color.AQUAMARINE),
@@ -64,7 +63,7 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 			f_max,
 			settings.sample_rate,
 		)
-		var target = pow(energy * 0.2, 0.26) * settings.max_height * 0.5
+		var target = pow(energy * 0.2, 0.26) * settings.max_height * 0.5 * settings.get_sensitivity_value()
 		
 		var speed = 0.8 if target > arc_lengths[b][2] else 0.1
 		var new_len = lerp(arc_lengths[b][2], target, speed)
@@ -91,7 +90,7 @@ func _draw_3d() -> void:
 		## c is the change/energy per frame
 		## d is the 2nd derivative
 		var _set = arc_lengths[i]
-		var rad = init_ring_size + i * ring_separation
+		var rad = settings.radius + i * ring_separation
 		
 		_set[4] = lerp(_set[4], _set[3], 0.1)
 		

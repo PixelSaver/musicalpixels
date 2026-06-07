@@ -18,7 +18,7 @@ class_name VisualizerSettings
 @export var sensitivity : float = 0. :
 	set(val):
 		sensitivity = clampf(val, -50., 50.)
-func get_sensitivity_value() -> float: return exp(sensitivity)
+func get_sensitivity_value() -> float: return exp(sensitivity/10.)
 
 func _init() -> void:
 	noise = NoiseTexture2D.new()

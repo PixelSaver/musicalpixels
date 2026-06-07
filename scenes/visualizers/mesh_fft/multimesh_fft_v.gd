@@ -100,7 +100,7 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 		#energy = pow(max(0.0, energy - 0.1), 1.5)
 
 		#var target = clamp(energy * 5.0, 0.0, 1.0) * max_height
-		var target = pow(energy * 0.2, 0.3) * settings.max_height * 0.8
+		var target = pow(energy * 0.2, 0.3) * settings.max_height * 0.8 * settings.get_sensitivity_value()
 
 		var speed = 0.8 if target > bar_heights[b] else 0.1
 		bar_heights[b] = lerp(bar_heights[b], target, speed)
