@@ -5,6 +5,8 @@ var state : FFTState = FFTState.new()
 const BASS_CEIL   := 0.8
 const MID_CEIL    := 0.3
 const TREBLE_CEIL := 0.03
+const ATTACK := 0.4
+const RELEASE := 0.04
 
 func get_visualizer_id() -> VisualizerDatabase.VisualizerID:
 	return VisualizerDatabase.VisualizerID.ABSTRACT_FFT
@@ -17,12 +19,12 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 	if spectrum.size() == 0:
 		return
 	
-	var raw_bass = FFTHelper.get_band_energy(spectrum, settings.fft_size, 20, 400, settings.sample_rate)
-	var raw_mid = FFTHelper.get_band_energy(spectrum, settings.fft_size, 400, 2000, settings.sample_rate)
-	var raw_treble = FFTHelper.get_band_energy(spectrum, settings.fft_size, 4000, 12000, settings.sample_rate)
-	state.bass = lerpf(state.bass, raw_bass, settings.smoothing)
-	state.mid = lerpf(state.mid, raw_mid, settings.smoothing)
-	state.treble = lerpf(state.treble, raw_treble, 0.2)
+	var raw_bass = FFTHelper.get_band_energy(spectrum, settings.fft_size, 20, 400, settings.sample_rate) * settings.get_sensitivity_value()
+	var raw_mid = FFTHelper.get_band_energy(spectrum, settings.fft_size, 400, 2000, settings.sample_rate) * settings.get_sensitivity_value()
+	var raw_treble = FFTHelper.get_band_energy(spectrum, settings.fft_size, 4000, 12000, settings.sample_rate) * settings.get_sensitivity_value()
+	state.bass = _smooth(state.bass, raw_bass)
+	state.mid = _smooth(state.mid, raw_mid)
+	state.treble = _smooth(state.treble, raw_treble)
 	print("Bass: %s\nMid: %s\nTreble: %s" % [state.bass, state.mid, state.treble])
 	state.amp = FFTHelper.get_amplitude_from_spectrum(spectrum)
 	#TODO beat detection
@@ -43,7 +45,7 @@ func _draw() -> void:
 		draw_circle(c, r, Color.YELLOW, true, -1, true)
 	
 	# treble diamond
-	var d := remap(state.treble, 0, TREBLE_CEIL, 0, 200)
+	var d := remap(state.treble, 0, TREBLE_CEIL, 0, 160)
 	print("Treble: %s" % state.treble)
 	if d > 1.0:
 		draw_colored_polygon(
@@ -55,3 +57,7 @@ func _draw() -> void:
 			]),
 			Color.GREEN
 		)
+
+func _smooth(from:float, to:float) -> float:
+	var rate := ATTACK if to > from else RELEASE
+	return lerpf(from, to, rate)
