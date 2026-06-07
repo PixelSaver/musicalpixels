@@ -37,6 +37,8 @@ tonemap_mode = 2
 [node name="ArcsMeshFFTVisualizer" type="Node2D" unique_id=873698239]
 script = ExtResource("1_2dqkc")
 settings = SubResource("Resource_gidke")
+ring_separation = 5.0
+init_ring_size = 5.0
 metadata/_custom_type_script = "uid://chkpgjer66rxa"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=938154032]
@@ -46,5 +48,5 @@ environment = SubResource("Environment_pnppk")
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1497868133]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 5, 0)
+[node name="Camera3D" type="Camera3D" parent="." unique_id=316642020]
+transform = Transform3D(1, 0, 0, 0, 0.7325429, 0.68072087, 0, -0.68072087, 0.7325429, 0, 30, 50)

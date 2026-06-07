@@ -6,5 +6,5 @@
 
 [node name="Manager" type="Node2D" parent="." unique_id=112581342]
 script = ExtResource("1_hyk8p")
-visualizer_chosen = 9
+visualizer_chosen = 10
 metadata/_custom_type_script = "uid://cw00nqrgqp1ev"

@@ -2,9 +2,9 @@ extends VisualizerClass
 class_name ArcsMeshFFTVisualizer
 
 @export var settings : VisualizerSettings = VisualizerSettings.new()
-@export var ring_separation := 10.0
-@export var ring_resolution := 30
-@export var init_ring_size := 10.0
+@export var ring_separation := 1.0
+@export var ring_resolution := 40
+@export var init_ring_size := 0.0
 var colors : Array[Color]= [
 	Color.from_string("#ec4503", Color.AQUAMARINE),
 	Color.from_string("#ffac11", Color.AQUAMARINE),
@@ -35,8 +35,10 @@ func begin_visualization() -> void:
 	add_child(mesh_inst)
 	var mat := StandardMaterial3D.new()
 	mat.shading_mode = BaseMaterial3D.SHADING_MODE_PER_VERTEX
+	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 	mat.vertex_color_use_as_albedo = true
 	mesh_inst.material_override = mat
+	mesh_inst.rotate_x(-PI/2.)
 	
 
 func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array, delta:float) -> void:
@@ -74,7 +76,6 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 	
 	cum_time += delta
 	_draw_3d()
-	im_mesh
 
 func _draw_3d() -> void:
 	im_mesh.clear_surfaces()
@@ -100,12 +101,13 @@ func _draw_3d() -> void:
 		)
 		draw_arc_3d(
 			im_mesh,
-			Vector3.ZERO, rad + sqrt(length*100), 
+			Vector3(0., 0., log(length)*3), 
+			rad + log(length*.1), 
 			theta, 
 			theta+length, 
-			colors[i % 4].lightened(remap(length, 0.0, TAU, -0.2, 0.2)), 
-			20 + pow(abs(_set[3]), 0.3) * (-1 if _set[3] < 0.0 else 1) * 3,
-			10.,
+			colors[i % 4].lightened(remap(length, 0.0, TAU, -0.1, 0.2)), 
+			3 + pow(abs(_set[3]), 0.8) * (-1 if _set[3] < 0.0 else 1)*0.5,
+			3. + pow(abs(_set[3]), 0.8) * (-1 if _set[3] < 0.0 else 1)*2.0,
 			ring_resolution, 
 		)
 	im_mesh.surface_end()
@@ -120,37 +122,66 @@ func draw_arc_3d(
 	thickness: float,
 	z_depth: float,
 	steps: int = 30,
+	#normal:
 ) -> void:
 	var half_t := thickness * 0.5
+	var half_d := z_depth * 0.5
+
 	for s in range(steps):
 		var t0 := float(s) / steps
-		var t1 := float (s+1) / steps
+		var t1 := float(s + 1) / steps
 		var a0 := lerpf(angle_from, angle_to, t0)
 		var a1 := lerpf(angle_from, angle_to, t1)
-		# 4 corners of this quad segment
-		var inner0 := center + Vector3(cos(a0) * (radius - half_t), sin(a0) * (radius - half_t), z_depth)
-		var outer0 := center + Vector3(cos(a0) * (radius + half_t), sin(a0) * (radius + half_t), z_depth)
-		var inner1 := center + Vector3(cos(a1) * (radius - half_t), sin(a1) * (radius - half_t), z_depth)
-		var outer1 := center + Vector3(cos(a1) * (radius + half_t), sin(a1) * (radius + half_t), z_depth)
-		
-		# Triangle 1
-		mesh.surface_set_color(color)
-		mesh.surface_set_normal(Vector3(1, 0, 0))
-		mesh.surface_add_vertex(inner0)
-		mesh.surface_set_color(color)
-		mesh.surface_set_normal(Vector3(1, 0, 0))
-		mesh.surface_add_vertex(outer0)
-		mesh.surface_set_color(color)
-		mesh.surface_set_normal(Vector3(1, 0, 0))
-		mesh.surface_add_vertex(outer1)
-		
-		# Triangle 2
-		mesh.surface_set_color(color)
-		mesh.surface_set_normal(Vector3(1, 0, 0))
-		mesh.surface_add_vertex(inner0)
-		mesh.surface_set_color(color)
-		mesh.surface_set_normal(Vector3(1, 0, 0))
-		mesh.surface_add_vertex(outer1)
-		mesh.surface_set_color(color)
-		mesh.surface_set_normal(Vector3(1, 0, 0))
-		mesh.surface_add_vertex(inner1)
+
+		# Front face (z = +half_d) and back face (z = -half_d)
+		var fi0 := center + Vector3(cos(a0) * (radius - half_t), sin(a0) * (radius - half_t),  half_d)
+		var fo0 := center + Vector3(cos(a0) * (radius + half_t), sin(a0) * (radius + half_t),  half_d)
+		var fi1 := center + Vector3(cos(a1) * (radius - half_t), sin(a1) * (radius - half_t),  half_d)
+		var fo1 := center + Vector3(cos(a1) * (radius + half_t), sin(a1) * (radius + half_t),  half_d)
+
+		var bi0 := center + Vector3(cos(a0) * (radius - half_t), sin(a0) * (radius - half_t), -half_d)
+		var bo0 := center + Vector3(cos(a0) * (radius + half_t), sin(a0) * (radius + half_t), -half_d)
+		var bi1 := center + Vector3(cos(a1) * (radius - half_t), sin(a1) * (radius - half_t), -half_d)
+		var bo1 := center + Vector3(cos(a1) * (radius + half_t), sin(a1) * (radius + half_t), -half_d)
+
+		# -- FRONT FACE (normal +Z) --
+		_tri(mesh, color, Vector3.BACK, fi0, fo0, fo1)
+		_tri(mesh, color, Vector3.BACK, fi0, fo1, fi1)
+
+		# -- BACK FACE (normal -Z, winding flipped) --
+		_tri(mesh, color, Vector3.FORWARD, bi0, bo1, bo0)
+		_tri(mesh, color, Vector3.FORWARD, bi0, bi1, bo1)
+
+		# -- OUTER WALL (normal points away from center radially) --
+		var on0 := Vector3(cos(a0), sin(a0), 0.0)
+		var on1 := Vector3(cos(a1), sin(a1), 0.0)
+		_tri(mesh, color, on0, fo0, bo0, bo1)
+		_tri(mesh, color, on1, fo0, bo1, fo1)
+
+		# -- INNER WALL (normal points toward center, flipped) --
+		var in0 := -Vector3(cos(a0), sin(a0), 0.0)
+		var in1 := -Vector3(cos(a1), sin(a1), 0.0)
+		_tri(mesh, color, in0, fi0, bi0, bi1)  # winding flipped vs outer
+		_tri(mesh, color, in1, fi0, bi1, fi1)
+
+	# -- END CAPS (flat quads at angle_from and angle_to) --
+	# Each cap needs its own segment normal (tangent to the arc at that point)
+	_add_cap(mesh, color, center, radius, half_t, half_d, angle_from, -1.0)
+	_add_cap(mesh, color, center, radius, half_t, half_d, angle_to,    1.0)
+
+
+func _tri(mesh: ImmediateMesh, color: Color, normal: Vector3, a: Vector3, b: Vector3, c: Vector3) -> void:
+	mesh.surface_set_color(color); mesh.surface_set_normal(normal); mesh.surface_add_vertex(a)
+	mesh.surface_set_color(color); mesh.surface_set_normal(normal); mesh.surface_add_vertex(b)
+	mesh.surface_set_color(color); mesh.surface_set_normal(normal); mesh.surface_add_vertex(c)
+
+
+func _add_cap(mesh: ImmediateMesh, color: Color, center: Vector3, radius: float, half_t: float, half_d: float, angle: float, dir: float) -> void:
+	# Normal is the tangent of the arc at this angle, pointing outward or inward
+	var cap_normal := Vector3(-sin(angle) * dir, cos(angle) * dir, 0.0)
+	var fi := center + Vector3(cos(angle) * (radius - half_t), sin(angle) * (radius - half_t),  half_d)
+	var fo := center + Vector3(cos(angle) * (radius + half_t), sin(angle) * (radius + half_t),  half_d)
+	var bi := center + Vector3(cos(angle) * (radius - half_t), sin(angle) * (radius - half_t), -half_d)
+	var bo := center + Vector3(cos(angle) * (radius + half_t), sin(angle) * (radius + half_t), -half_d)
+	_tri(mesh, color, cap_normal, fi, bi, bo)
+	_tri(mesh, color, cap_normal, fi, bo, fo)
