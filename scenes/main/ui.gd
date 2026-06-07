@@ -2,15 +2,16 @@
 extends Control
 class_name UI
 @onready var option_button: OptionButton = $OptionButton
+@onready var color_picker: ColorPickerButton = $ColorPickerButton
 var countdown = 4.0
 var countdown_max = 4.0
 
 func _ready() -> void:
-	#option_button.clear()
-	#for item in VisualizerDatabase.VISUALIZERS.keys():
-		#option_button.add_item(str(item), item)
 	option_button.item_selected.connect(func(idx):
 		Global.switch_to_visualizer.emit(idx)
+	)
+	color_picker.color_changed.connect(func(color:Color):
+		Global.global_settings.background = color
 	)
 
 func _input(event: InputEvent) -> void:

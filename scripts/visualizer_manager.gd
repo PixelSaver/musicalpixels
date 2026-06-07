@@ -4,6 +4,7 @@ class_name VisualizerManager
 @onready var miniaudio = MiniaudioClass.new()
 @export var visualizer_chosen : VisualizerDatabase.VisualizerID :
 	set(id):
+		await ready
 		switch_to_visualizer(id)
 		visualizer_chosen = id
 @export var visualizer : VisualizerClass
@@ -11,6 +12,7 @@ class_name VisualizerManager
 func _ready() -> void:
 	add_child(miniaudio)
 	miniaudio.start()
+	await get_tree().process_frame
 	Global.switch_to_visualizer.connect(switch_to_visualizer)
 
 func switch_to_visualizer(id:VisualizerDatabase.VisualizerID):
