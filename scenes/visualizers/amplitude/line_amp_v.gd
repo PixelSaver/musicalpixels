@@ -1,11 +1,6 @@
 extends VisualizerClass
 class_name LineVisualizer
 
-const NUM_BARS = 64
-const BAR_WIDTH = 16
-const MAX_HEIGHT = 200
-const SMOOTHING = 0.15
-
 var bar_heights: Array[float] = []
 var line := Line2D.new()
 
@@ -14,11 +9,11 @@ func get_visualizer_id() -> VisualizerDatabase.VisualizerID:
 
 func _ready() -> void:
 	add_child(line)
-	bar_heights.resize(NUM_BARS)
+	bar_heights.resize(settings.num_bars)
 	bar_heights.fill(0.0)
 
 func handle_visualization(_mini, samples:PackedFloat32Array, _delta:float) -> void:
-	if samples.size() < NUM_BARS * 2:
+	if samples.size() < settings.num_bars * 2:
 		return
 
 	# Mmono
@@ -28,8 +23,8 @@ func handle_visualization(_mini, samples:PackedFloat32Array, _delta:float) -> vo
 		mono[i] = (samples[i * 2] + samples[i * 2 + 1]) * 0.5
 
 	# Split mono buffer into bands and get peak per band
-	var samples_per_band = mono.size() / float(NUM_BARS)
-	for b in range(NUM_BARS):
+	var samples_per_band = mono.size() / float(settings.num_bars)
+	for b in range(settings.num_bars):
 		var peak = 0.0
 		var start = b * samples_per_band
 		for i in range(samples_per_band):
@@ -37,8 +32,8 @@ func handle_visualization(_mini, samples:PackedFloat32Array, _delta:float) -> vo
 			if v > peak:
 				peak = v
 		# Smooth toward target height
-		var target = peak * MAX_HEIGHT
-		bar_heights[b] = lerp(bar_heights[b], exp(target*.15), SMOOTHING)
+		var target = peak * settings.max_height * settings.get_sensitivity_value()
+		bar_heights[b] = lerp(bar_heights[b], exp(target*.15), settings.smoothing)
 
 	_update_line()
 
@@ -46,13 +41,13 @@ func _update_line() -> void:
 	if bar_heights.is_empty():
 		return
 	var viewport_size = get_viewport_rect().size
-	var total_width = NUM_BARS * BAR_WIDTH
+	var total_width = settings.num_bars * settings.bar_width
 	var origin_x = (
 		viewport_size.x - total_width
 	) / 2.0
 	var origin_y = viewport_size.y / 2.0
 	line.clear_points()
-	for p in range(NUM_BARS):
+	for p in range(settings.num_bars):
 		# spatial smoothing
 		var h := 0.0
 		var count := 0.0
@@ -60,12 +55,12 @@ func _update_line() -> void:
 			var idx = clamp(
 				p + o,
 				0,
-				NUM_BARS - 1
+				settings.num_bars - 1
 			)
 			h += bar_heights[idx]
 			count += 1.0
 		h /= count
-		var x = origin_x + p * BAR_WIDTH
+		var x = origin_x + p * settings.bar_width
 		line.add_point(
 			Vector2(x, origin_y - h)
 		)

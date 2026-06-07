@@ -1,10 +1,8 @@
 extends VisualizerClass
 class_name ArcsFFTVisualizer
 
-@export var settings : VisualizerSettings = VisualizerSettings.new()
 @export var ring_separation := 10.0
 @export var ring_resolution := 30
-@export var init_ring_size := 10.0
 var colors : Array[Color]= [
 	Color.from_string("#ec4503", Color.AQUAMARINE),
 	Color.from_string("#ffac11", Color.AQUAMARINE),
@@ -34,15 +32,13 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 	var spectrum: PackedFloat32Array = miniaudio.get_fft(settings.fft_size, true, true, 0)
 	if spectrum.size() == 0:
 		return
-
+		
 	for b in range(settings.num_bars):
 		var t1 = float(b) / settings.num_bars
 		var t2 = float(b + 1) / settings.num_bars
-
-		var nyquist :float= settings.sample_rate * 0.5
 		var f_min := settings.low_cut * pow(settings.high_cut / settings.low_cut, t1)
 		var f_max := settings.low_cut * pow(settings.high_cut / settings.low_cut, t2)
-
+		
 		var energy := FFTHelper.get_band_energy(
 			spectrum,
 			settings.fft_size,
@@ -74,7 +70,7 @@ func _draw() -> void:
 		## c is the change/energy per frame
 		## d is the 2nd derivative
 		var _set = arc_lengths[i]
-		var rad = init_ring_size + i * ring_separation
+		var rad = settings.radius + i * ring_separation
 		_set[4] = lerp(_set[4], _set[3], 0.1)
 		var advance = _set[4] * .1 if _set[4] > 0. else _set[4] * .05
 		advance += settings.noise_func.get_noise_2d(cum_time, i*30.) * .1 * (.05 + max_energy) * settings.noise_level * log(i+1)

@@ -39,6 +39,7 @@ script = ExtResource("1_2dqkc")
 settings = SubResource("Resource_gidke")
 ring_separation = 5.0
 init_ring_size = 5.0
+settings = SubResource("Resource_gidke")
 metadata/_custom_type_script = "uid://chkpgjer66rxa"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=938154032]

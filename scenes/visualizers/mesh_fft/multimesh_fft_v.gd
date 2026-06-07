@@ -3,17 +3,17 @@ class_name MultiMeshFFTVisualizer
 
 @onready var mm_inst: MultiMeshInstance3D = $MultiMeshInstance3D
 @export var mm_shader : Shader
-@export var low_cut := 80.0
-@export var high_cut := 24000.0
-@export var num_bars  := 32
-@export var fft_size := 1024
-@export var bar_width := 16
-@export var max_height := 400.0
-@export var noise_level := 1.0
-@export var noise : NoiseTexture2D
-@export var h_gradient : GradientTexture1D
-
-@export var sample_rate := 48000.0
+#@export var low_cut := 80.0
+#@export var high_cut := 24000.0
+#@export var num_bars  := 32
+#@export var fft_size := 1024
+#@export var bar_width := 16
+#@export var max_height := 400.0
+#@export var noise_level := 1.0
+#@export var noise : NoiseTexture2D
+#@export var h_gradient : GradientTexture1D
+#
+#@export var sample_rate := 48000.0
 
 @export var rings := 10
 @export var points := 400
@@ -64,44 +64,43 @@ func _ready() -> void:
 			))
 			idx += 1
 	
-	bar_heights.resize(num_bars)
+	bar_heights.resize(settings.num_bars)
 	bar_heights.fill(0.0)
-	fft_img = Image.create(num_bars, 1, false, Image.FORMAT_RF)
+	fft_img = Image.create(settings.num_bars, 1, false, Image.FORMAT_RF)
 	fft_tex = ImageTexture.create_from_image(fft_img)
 	
 	#var mesh_mat = mesh.material_override as ShaderMaterial
-	sm.set_shader_parameter("gradient", h_gradient)
+	sm.set_shader_parameter("gradient", settings.gradient)
 	sm.set_shader_parameter("data_tex", fft_tex)
-	sm.set_shader_parameter("noise_tex", noise)
-	sm.set_shader_parameter("noise_level", noise_level)
+	sm.set_shader_parameter("noise_tex", settings.noise)
+	sm.set_shader_parameter("noise_level", settings.noise_level)
 	sm.set_shader_parameter("rings", rings)
 	sm.set_shader_parameter("points", points)
 
 func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array, _delta:float) -> void:
-	var spectrum: PackedFloat32Array = miniaudio.get_fft(fft_size, true, true, 0)
+	var spectrum: PackedFloat32Array = miniaudio.get_fft(settings.fft_size, true, true, 0)
 	if spectrum.size() == 0:
 		return
 
-	for b in range(num_bars):
-		var t1 = float(b) / num_bars
-		var t2 = float(b + 1) / num_bars
+	for b in range(settings.num_bars):
+		var t1 = float(b) / settings.num_bars
+		var t2 = float(b + 1) / settings.num_bars
 
-		var nyquist := sample_rate * 0.5
-		var f_min := low_cut * pow(high_cut / low_cut, t1)
-		var f_max := low_cut * pow(high_cut / low_cut, t2)
+		var f_min := settings.low_cut * pow(settings.high_cut / settings.low_cut, t1)
+		var f_max := settings.low_cut * pow(settings.high_cut / settings.low_cut, t2)
 		
 
 		var energy := FFTHelper.get_band_energy(
 			spectrum,
-			fft_size,
+			settings.fft_size,
 			f_min,
 			f_max,
-			sample_rate,
+			settings.sample_rate,
 		)
 		#energy = pow(max(0.0, energy - 0.1), 1.5)
 
 		#var target = clamp(energy * 5.0, 0.0, 1.0) * max_height
-		var target = pow(energy * 0.2, 0.3) * max_height * 0.8
+		var target = pow(energy * 0.2, 0.3) * settings.max_height * 0.8
 
 		var speed = 0.8 if target > bar_heights[b] else 0.1
 		bar_heights[b] = lerp(bar_heights[b], target, speed)
@@ -110,8 +109,8 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 	_update_fft_tex()
 
 func _update_fft_tex() -> void:
-	for i in range(num_bars):
-		var v = clamp(bar_heights[i] / max_height, 0.0, 1.0)
+	for i in range(settings.num_bars):
+		var v = clamp(bar_heights[i] / settings.max_height, 0.0, 1.0)
 		fft_img.set_pixel(i, 0, Color(v,0,0))
 	#fft_tex = ImageTexture.create_from_image(fft_img)
 	fft_tex.update(fft_img)

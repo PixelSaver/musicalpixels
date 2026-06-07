@@ -1,6 +1,8 @@
 extends Node2D
 class_name VisualizerClass
 
+@export var settings:VisualizerSettings
+
 func get_visualizer_id() -> VisualizerDatabase.VisualizerID:
 	push_error("Override function to return id")
 	return -1
@@ -11,5 +13,9 @@ func begin_visualization() -> void:
 func end_visualization() -> void:
 	queue_free()
 
-func handle_visualization(_miniaudio:MiniaudioClass, _samples:PackedFloat32Array, _sensitivity:float, _delta:float) -> void:
+func handle_visualization(
+	_miniaudio:MiniaudioClass, 
+	_samples:PackedFloat32Array, 
+	_delta:float
+) -> void:
 	pass
