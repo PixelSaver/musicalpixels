@@ -27,7 +27,6 @@ VisualizerDatabase="*uid://dfg1kkaie47gf"
 
 window/size/transparent=true
 window/subwindows/embed_subwindows=false
-window/per_pixel_transparency/allowed=true
 
 [editor_plugins]
 
