@@ -11,5 +11,5 @@ func begin_visualization() -> void:
 func end_visualization() -> void:
 	queue_free()
 
-func handle_visualization(_miniaudio:MiniaudioClass, _samples:PackedFloat32Array, _delta:float) -> void:
+func handle_visualization(_miniaudio:MiniaudioClass, _samples:PackedFloat32Array, _sensitivity:float, _delta:float) -> void:
 	pass
