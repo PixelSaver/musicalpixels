@@ -28,7 +28,7 @@ var bar_heights: Array[float] = []
 func get_visualizer_id() -> VisualizerDatabase.VisualizerID:
 	return VisualizerDatabase.VisualizerID.MULTIMESH_FFT
 func _init() -> void:
-	
+	super()
 	RenderingServer.set_debug_generate_wireframes(true)
 
 func _ready() -> void:

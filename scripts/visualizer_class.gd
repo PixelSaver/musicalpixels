@@ -3,7 +3,7 @@ class_name VisualizerClass
 
 @export var settings:VisualizerSettings
 
-func _ready() -> void:
+func _init() -> void:
 	
 	Global.sensitivity_delta.connect(func(del:float):
 		settings.sensitivity += del

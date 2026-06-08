@@ -4,19 +4,21 @@ class_name ArcPulseFFTVisualizer
 var state : FFTState = FFTState.new()
 const BASS_CEIL   := 0.6
 const MID_CEIL    := 0.5
-const TREBLE_CEIL := 0.03
+const TREBLE_CEIL := 0.8
 const ATTACK := 0.2
 const RELEASE := 0.04
 var b_1 : float = 0.0
 var b_2 : float = 0.0 
 var b_3 : float = 0.0
-var num_mids = 3.0
+var num_mids := 3
+var num_trebles := 12
 var angles : Array[float] = [
 	PI / 4.0,
 	3 * PI / 4.0,
 	5 * PI / 4.0,
 	7 * PI / 4.0,
 ]
+var trebles : Array[float] = []
 var mids : Array[float] = []
 var colors = [
 	Color("#007368"),
@@ -29,8 +31,11 @@ func get_visualizer_id() -> VisualizerDatabase.VisualizerID:
 
 func begin_visualization() -> void: 
 	mids.resize(num_mids)
+	trebles.resize(num_trebles)
 	for m in range(num_mids):
 		mids[m] = 0.0
+	for t in range(num_trebles):
+		trebles[t] = 0.0
 
 func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array, _delta:float) -> void:
 	var spectrum: PackedFloat32Array = miniaudio.get_fft(settings.fft_size, true, true, 0)
@@ -47,7 +52,11 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 	for m in range(num_mids):
 		var sub_range = Vector2(range.x + del * m, range.x + del * (m+1))
 		mids[m] = _smooth(mids[m], FFTHelper.get_band_energy(spectrum, settings.fft_size, sub_range.x, sub_range.y, settings.sample_rate) * settings.get_sensitivity_value())
-		
+	range = Vector2(2000, 20000)
+	del = (range.y - range.x) / num_trebles
+	for t in range(num_trebles):
+		var sub_range = Vector2(range.x + del * t, range.x + del * (t+1))
+		trebles[t] = _smooth(trebles[t], FFTHelper.get_band_energy(spectrum, settings.fft_size, sub_range.x, sub_range.y, settings.sample_rate) * settings.get_sensitivity_value())
 
 	state.bass = _smooth(state.prev_bass, state.bass)
 	state.mid = _smooth(state.prev_mid, state.mid)
@@ -66,6 +75,8 @@ func _draw() -> void:
 	_draw_bass_arcs(c, clampf(sqrt(b_3), 0.0, BASS_CEIL))
 	for i in range(mids.size()):
 		_draw_mid_arcs(c, clampf(sqrt(sqrt(mids[i])), 0.0, MID_CEIL), i)
+	for i in range(trebles.size()):
+		_draw_treble_arcs(c, clampf(sqrt(sqrt(trebles[i])), 0.0, TREBLE_CEIL), i)
 
 func _draw_bass_arcs(c:Vector2, data:float) -> void:
 	var mult : float = PI / 4.0 / BASS_CEIL
@@ -77,15 +88,21 @@ func _draw_bass_arcs(c:Vector2, data:float) -> void:
 func _draw_mid_arcs(c:Vector2, data:float, seed:int) -> void:
 	var mult : float = PI / 4.0 / MID_CEIL
 	var rot = settings.noise_func.get_noise_2d(hash(seed*234.23), c.x) * 6 * PI
-	_draw_arc(c, data*250. + seed*30., angles[0]+rot, angles[0]+rot + 1+ data*mult, 50, colors[1], true, 3)
-	_draw_arc(c, data*250. + seed*30., angles[1]+rot, angles[1]+rot + 1+ data*mult, 50, colors[1], true, 3)
-	_draw_arc(c, data*250. + seed*30., angles[2]+rot, angles[2]+rot + 1+ data*mult, 50, colors[1], true, 3)
-	_draw_arc(c, data*250. + seed*30., angles[3]+rot, angles[3]+rot + 1+ data*mult, 50, colors[1], true, 3)
+	_draw_arc(c, data*350. + seed*30., angles[0]+rot, angles[0]+rot + 1+ data*mult, 50, colors[1], true, 3)
+	_draw_arc(c, data*350. + seed*30., angles[1]+rot, angles[1]+rot + 1+ data*mult, 50, colors[1], true, 3)
+	_draw_arc(c, data*350. + seed*30., angles[2]+rot, angles[2]+rot + 1+ data*mult, 50, colors[1], true, 3)
+	_draw_arc(c, data*350. + seed*30., angles[3]+rot, angles[3]+rot + 1+ data*mult, 50, colors[1], true, 3)
 
+func _draw_treble_arcs(c:Vector2, data:float, seed:int) -> void:
+	var mult : float = PI / 4.0 / TREBLE_CEIL
+	var rot = settings.noise_func.get_noise_1d(hash(seed*123.23)) * 3 * PI
+	_draw_arc(c, data*2000. * log(seed*.1+1.), angles[0]+rot, angles[0]+rot + 2.+ data*mult, 50, colors[2], true, 3)
+	
 func _draw_arc(center: Vector2, radius: float, start_angle: float, end_angle: float, point_count: int, color: Color, spike: bool = false, width: float = -1.0, antialiased: bool = false):
 	draw_arc(center, radius, start_angle, end_angle, point_count, color, width, antialiased)
-	var spike_dir = Vector2.RIGHT.rotated(start_angle)
-	draw_line(center + spike_dir * (radius - width*0.5), center + spike_dir * (radius + 5.), color, width)
+	if spike and radius > 10:
+		var spike_dir = Vector2.RIGHT.rotated(start_angle)
+		draw_line(center + spike_dir * (radius - width*0.5), center + spike_dir * (radius + 5.), color, width)
 
 func _smooth(from:float, to:float) -> float:
 	var rate := ATTACK if to > from else RELEASE
