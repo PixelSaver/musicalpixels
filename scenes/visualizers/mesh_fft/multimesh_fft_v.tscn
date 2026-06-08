@@ -20,7 +20,7 @@ noise = SubResource("FastNoiseLite_brou6")
 [sub_resource type="Resource" id="Resource_f70ap"]
 script = ExtResource("3_brou6")
 max_height = 150.0
-noise_level = 0.1
+noise_level = 0.4
 noise = SubResource("NoiseTexture2D_g23sp")
 noise_func = SubResource("FastNoiseLite_82hp5")
 gradient = SubResource("GradientTexture1D_82hp5")

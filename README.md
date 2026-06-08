@@ -88,7 +88,7 @@ This section should list any major frameworks/libraries used to bootstrap your p
 Honestly, there is so much more to do! I'll leave a list down below for what ideas I have now, but I'm dropping this project because I don't want to be stuck on this for too long, and I have other ideas for things to do!! I think. If there's at least 10 people who star this or contact me, I'll be happy to come back and improve this by miles!
 - [ ] Better UI for selection & customization
     - [ ] Gradients
-    - [ ] Sensitivity
+    - [x] Sensitivity
     - [ ] Etc
 - [ ] Transitions between visualizers
 - [ ] More 3d animations

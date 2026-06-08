@@ -62,3 +62,14 @@ static func get_amplitude_from_sample(samples: PackedFloat32Array, window: int =
 	for i in range(start, samples.size()):
 		sum += samples[i] * samples[i]
 	return sqrt(sum / (samples.size() - start))
+
+static func split_fft_buckets(spectrum, fft_size, sample_rate, state:FFTState=FFTState.new()) -> FFTState:
+	state.prev_bass = state.bass
+	state.prev_mid = state.mid
+	state.prev_treble = state.treble
+	state.prev_amp = state.amp
+	state.bass = FFTHelper.get_band_energy(spectrum, fft_size, 20, 400, sample_rate)
+	state.mid = FFTHelper.get_band_energy(spectrum, fft_size, 400, 2000, sample_rate)
+	state.treble = FFTHelper.get_band_energy(spectrum, fft_size, 4000, 12000, sample_rate)
+	state.amp = FFTHelper.get_amplitude_from_spectrum(spectrum)
+	return state

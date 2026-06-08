@@ -13,6 +13,7 @@ enum VisualizerID {
 	ARCS_FFT,
 	ARCS_MESH_FFT,
 	ABSTRACT_FFT,
+	ARC_PULSE_FFT,
 }
 const VISUALIZERS := {
 	VisualizerID.LINE_AMP:
@@ -39,6 +40,8 @@ const VISUALIZERS := {
 		preload("res://scenes/visualizers/mesh_fft/arcs_mesh_fft_v.tscn"),
 	VisualizerID.ABSTRACT_FFT:
 		preload("res://scenes/visualizers/abstract_fft_v.tscn"),
+	VisualizerID.ARC_PULSE_FFT:
+		preload("res://scenes/visualizers/arc_pulse_fft_v.tscn"),
 }
 
 func get_random_id() -> VisualizerID:

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b6gbmb5o075bw"]
+
+[ext_resource type="Script" uid="uid://ja11ht8gellx" path="res://scenes/visualizers/arc_pulse_fft_v.gd" id="1_hywgc"]
+
+[node name="ArcPulseFFTVisualizer" type="Node2D" unique_id=176034377]
+script = ExtResource("1_hywgc")

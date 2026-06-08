@@ -60,7 +60,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 selected = 9
-item_count = 11
+item_count = 12
 popup/item_0/text = "Line Amp"
 popup/item_0/id = 0
 popup/item_1/text = "Bars Amp"
@@ -83,6 +83,8 @@ popup/item_9/text = "Arcs 3D"
 popup/item_9/id = 9
 popup/item_10/text = "Abstract"
 popup/item_10/id = 10
+popup/item_11/text = "Arc Pulse"
+popup/item_11/id = 11
 
 [node name="Panel" type="Panel" parent="CanvasLayer/Control" unique_id=1789349647]
 layout_mode = 1
