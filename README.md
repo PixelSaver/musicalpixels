@@ -32,6 +32,9 @@ It's got:
 - Cool colors (for most of them)
 - 2d & 3d
 - Amplitude based and frequency based
+- Scroll to change sensitivity
+- Picking the background color (transparency works too hopefully)
+- Automatically hidden UI
 
 > [!NOTE]
 > This has not been tested for Mac Users; I'm not sure the extension works, and I'm not sure transparency works. 
@@ -58,6 +61,7 @@ https://github.com/user-attachments/assets/c669b7a5-f19d-426c-b282-b522e31e1bb3
 <img src="media/6.png" alt="Screenshot of one of the visualizers">
 <img src="media/7.png" alt="Screenshot of one of the visualizers">
 <img src="media/8.png" alt="Screenshot of one of the visualizers">
+<img src="media/9.png" alt="Screenshot of one of the visualizers">
 
 #### Notes
 - The UI dissappears after 4 seconds of inactivity (no mouse movement)
