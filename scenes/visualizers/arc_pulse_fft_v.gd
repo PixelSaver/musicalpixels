@@ -2,11 +2,14 @@ extends VisualizerClass
 class_name ArcPulseFFTVisualizer
 
 var state : FFTState = FFTState.new()
-const BASS_CEIL   := 0.8
+const BASS_CEIL   := 0.6
 const MID_CEIL    := 0.3
 const TREBLE_CEIL := 0.03
-const ATTACK := 0.4
+const ATTACK := 0.2
 const RELEASE := 0.04
+var b_1 : float = 0.0
+var b_2 : float = 0.0 
+var b_3 : float = 0.0
 var colors = [
 	Color("#007368"),
 	Color("#e28600"),
@@ -23,6 +26,9 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 	if spectrum.size() == 0:
 		return
 	
+	b_1 = _smooth(b_1, FFTHelper.get_band_energy(spectrum, settings.fft_size, 20, 300, settings.sample_rate) * settings.get_sensitivity_value())
+	b_2 = _smooth(b_2, FFTHelper.get_band_energy(spectrum, settings.fft_size, 50, 150, settings.sample_rate) * settings.get_sensitivity_value())
+	b_3 = _smooth(b_3, FFTHelper.get_band_energy(spectrum, settings.fft_size, 200, 400, settings.sample_rate) * settings.get_sensitivity_value())
 	state = FFTHelper.split_fft_buckets(spectrum, settings.fft_size, settings.sample_rate, state)
 	state.bass = _smooth(state.prev_bass, state.bass)
 	state.mid = _smooth(state.prev_mid, state.mid)
@@ -35,7 +41,10 @@ func handle_visualization(miniaudio:MiniaudioClass, _samples:PackedFloat32Array,
 func _draw() -> void:
 	var c = get_viewport_rect().size / 2.
 	# bass rectangle across screen
-	_draw_bass_arcs(c, clampf(state.bass, 0.0, BASS_CEIL))
+	# _draw_bass_arcs(c, clampf(state.bass, 0.0, BASS_CEIL))
+	_draw_bass_arcs(c, clampf(sqrt(b_1), 0.0, BASS_CEIL))
+	_draw_bass_arcs(c, clampf(sqrt(b_2), 0.0, BASS_CEIL))
+	_draw_bass_arcs(c, clampf(sqrt(b_3), 0.0, BASS_CEIL))
 
 func _draw_bass_arcs(c:Vector2, data:float) -> void:
 	print("Value: %s" % data)
