@@ -42,12 +42,14 @@ This works with your system audio, so you are meant to place it sort of in the b
 
 The transparency is there because I imagined it running like a sort of background (not that I know how to set that up on any platform), so changing it to the opaque black is recommended if you don't want to mess with transparency.
 
+> [!NOTE]
+> Click on the top left box to change the background color!
+
 
 > [!NOTE]
 > This has not been tested for Mac Users; I'm not sure the extension works, and I'm not sure transparency works. 
 
-### What do I take out of this?
-Learn C... The gd extension is so useful. Also, there are so many cool people out there, that it's a shame not to do research on what people have done already!
+
 
 
 
