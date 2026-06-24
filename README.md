@@ -36,6 +36,13 @@ It's got:
 - Picking the background color (transparency works too hopefully)
 - Automatically hidden UI
 
+### How do I use it?
+
+This works with your system audio, so you are meant to place it sort of in the background or to the second monitor. Then, play any sort of audio (music, youtube, podcast, etc) and watch the visualization! Let me know if the system audio fails or if you want this to work with uploaded audio files.
+
+The transparency is there because I imagined it running like a sort of background (not that I know how to set that up on any platform), so changing it to the opaque black is recommended if you don't want to mess with transparency.
+
+
 > [!NOTE]
 > This has not been tested for Mac Users; I'm not sure the extension works, and I'm not sure transparency works. 
 
